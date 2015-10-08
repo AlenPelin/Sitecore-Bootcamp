@@ -1,0 +1,8 @@
+src/.vs/
+src/packages/
+src/Sitecore.Bootcamp/bin/
+src/Sitecore.Bootcamp/obj/
+src/Sitecore.Bootcamp/Files.zip
+src/Sitecore.Bootcamp.Shell/obj/
+src/Sitecore.Bootcamp.Shell/bin/
+src/Sitecore.Bootcamp.Shell/Files.zip

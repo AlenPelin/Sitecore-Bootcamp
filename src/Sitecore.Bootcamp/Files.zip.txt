@@ -1,0 +1,1 @@
+﻿Files.zip should be placed into this location and contain all /website//* files from the given Sitecore version excepting /website/sitecore/login//* and /website/sitecore/shell//* 

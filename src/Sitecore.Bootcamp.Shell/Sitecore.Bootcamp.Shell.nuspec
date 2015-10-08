@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Sitecore.Bootcamp.Shell</id>
+    <version>0.$major.$minor.$revision</version>
+    <title>Sitecore Shell installation.</title>
+    <authors>Alen Pelin</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Sitecore $major.$minor rev. $revision.</description>
+    <dependencies>
+      <dependency id="Sitecore.Bootcamp" version="0.$major.$minor.$revision" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Sitecore.Bootcamp.Shell.dll" target="lib\Sitecore.Bootcamp.Shell.dll" />
+  </files>
+</package>

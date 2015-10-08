@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Sitecore.Bootcamp</id>
+    <version>0.$major.$minor.$revision</version>
+    <title>Sitecore installation.</title>
+    <authors>Alen Pelin</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Sitecore $major.$minor rev. $revision.</description>
+    <dependencies>
+      <dependency id="DotNetZip.Reduced" version="1.9.1.8" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Default.aspx" target="content\Default.aspx" />
+    <file src="App_Config\Include\zzz\DataFolder.config" target="content\App_Config\Include\zzz\DataFolder.config" />
+    <file src="bin\Sitecore.Bootcamp.dll" target="lib\Sitecore.Bootcamp.dll" />
+  </files>
+</package>
