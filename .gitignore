@@ -6,3 +6,5 @@ src/Sitecore.Bootcamp/Files.zip
 src/Sitecore.Bootcamp.Shell/obj/
 src/Sitecore.Bootcamp.Shell/bin/
 src/Sitecore.Bootcamp.Shell/Files.zip
+*.suo
+*.user

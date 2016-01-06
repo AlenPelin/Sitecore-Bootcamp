@@ -1,44 +1,61 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Sitecore.Bootcamp.Default" %>
 
 <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div style="width: 800px; margin: 0 auto;">
-      <asp:PlaceHolder runat="server" ID="panel" Visible="False">
-        <h1>License</h1>
-        Sitecore License file:<br />
-        <asp:FileUpload runat="server" ID="license"/><br />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
 
-        <h1>SQL Server</h1>
-        Data Source:<br /> <asp:TextBox runat="server" ID="dataSource" Text="(local)" Width="400px" /><br />
-        Integrated Security:<br /> <asp:CheckBox runat="server" ID="integrated" Width="400px"/><br />
-        User ID:<br /> <asp:TextBox runat="server" ID="userId" Text="sa" Width="400px" /><br />
-        Password:<br /> <asp:TextBox runat="server" ID="password" Text="12345" TextMode="Password" Width="400px" /><br />
+    <title>Welcome to Sitecore</title>
 
-        <br />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 
-        Core:<br /> <asp:TextBox runat="server" ID="coreName" Text="Sitecore_Core" Width="400px"/><br />
-        Master:<br /> <asp:TextBox runat="server" ID="masterName" Text="Sitecore_Master" Width="400px"/><br />
-        Web:<br /> <asp:TextBox runat="server" ID="webName" Text="Sitecore_Web" Width="400px"/><br />
-        Reporting:<br /> <asp:TextBox runat="server" Text="Sitecore_Reporting" ID="reportingName" Width="400px"/><br />
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="https://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
 
-        <h1>MongoDB</h1>
-
-        Analytics: <br /><asp:TextBox runat="server" ID="analytics" Text="mongodb://localhost/analytics" Width="800px" /><br />
-        Tracking Contract:<br /> <asp:TextBox runat="server" ID="tracking_contract" Text="mongodb://localhost/tracking_contact" Width="800px"/><br />
-        Tracking Live: <br /><asp:TextBox runat="server" ID="tracking_live" Text="mongodb://localhost/tracking_live" Width="800px"/><br />
-        Tracking History: <br /><asp:TextBox runat="server" ID="tracking_history" Text="mongodb://localhost/tracking_history" Width="800px"/><br />
-        <br />
-        <asp:Button runat="server" OnClick="DoInstall" Text="Install"/>
-
-      </asp:PlaceHolder>
+    <!-- Custom styles for this template -->
+    <link href="Default.css" rel="stylesheet" />
     
-    </div>
-    </form>
-</body>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>    
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="#">Intro</a></li>
+            <li role="presentation"><a href="/Default.aspx?install=1">Install</a></li>
+            <li role="presentation"><a href="https://github.com/Sitecore/Sitecore-Bootcamp">GitHub</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Sitecore</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Sitecore deployed</h1>
+        <p class="lead">Sitecore solution is already deployed and the last thing that is left to do is to download and install Sitecore files around it. Click the button to proceed to installation.</p>
+        <p><a class="btn btn-lg btn-success" href="/Default.aspx?install=1" role="button">Download and Install</a></p>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; Sitecore 2016</p>
+      </footer>
+
+    </div> <!-- /container -->
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="https://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
 </html>
