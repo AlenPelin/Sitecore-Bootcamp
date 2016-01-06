@@ -46,9 +46,7 @@
           {
             installationStarted = true;
 
-            File.Delete(this.Server.MapPath("Default.css"));
-            File.Delete(this.Server.MapPath("Default.aspx"));
-            File.Delete(this.Server.MapPath("favicon.ico"));
+            this.DeleteInstallFiles();
 
             this.WriteLine("Downloading metadata...");
 
@@ -56,87 +54,9 @@
 
             this.WriteLine("Downloading client files...");
 
-            var fileInfo = release.Defaults.Files["client"].Download();
+            var zip = this.GetFileSetZip(release, "client");
 
-            var zipFilePath = fileInfo.FullName;
-            this.WriteLine("Downloaded to " + zipFilePath);
-
-            ZipFile zip;
-
-            this.WriteLine("Extracting client files...");
-
-            try
-            {
-              zip = new ZipFile(zipFilePath);
-            }
-            catch
-            {
-              this.WriteLine("Cached client files are corrupted. Re-downloading...");
-
-              File.Delete(zipFilePath);
-
-              fileInfo = release.Defaults.Files["client"].Download();
-
-              zipFilePath = fileInfo.FullName;
-              this.WriteLine("Downloaded to " + zipFilePath);
-
-              this.WriteLine("Extracting client files...");
-
-              zip = new ZipFile(zipFilePath);
-            }
-
-            using (zip)
-            {
-              foreach (var entry in zip.SelectEntries("*"))
-              {
-                var fileName = entry.FileName;
-                var website = "Website/";
-                var virtualPath = fileName.Substring(fileName.IndexOf(website) + website.Length);
-
-                this.WriteLine("Extracting: " + virtualPath);
-
-                var filePath = this.Server.MapPath(virtualPath);
-                if (entry.IsDirectory)
-                {
-                  if (!Directory.Exists(filePath))
-                  {
-                    Directory.CreateDirectory(filePath);
-                  }
-                }
-                else
-                {
-                  if (File.Exists(filePath))
-                  {
-                    this.WriteLine("Skipped. Already exists.");
-
-                    continue;
-                  }
-
-                  try
-                  {
-                    var directoryPath = Path.GetDirectoryName(filePath);
-                    if (!Directory.Exists(directoryPath))
-                    {
-                      Directory.CreateDirectory(directoryPath);
-                    }
-
-                    using (var file = File.OpenWrite(filePath))
-                    {
-                      entry.Extract(file);
-                    }
-
-                    this.WriteLine("Done.");
-                  }
-                  catch (Exception ex)
-                  {
-                    this.WriteLine("Failed.");
-                    this.WriteLine("- Exception: " + ex.GetType().FullName);
-                    this.WriteLine("- Message: " + ex.Message);
-                    this.WriteLine("- StackTrace: " + ex.StackTrace.Replace("\n", "<br />"));
-                  }
-                }
-              }
-            }
+            this.ExtractClient(zip);
 
             installationFinished = true;
 
@@ -167,6 +87,109 @@
 
         Thread.Sleep(1000);
       }
+    }
+
+    private void ExtractClient([NotNull] ZipFile zip)
+    {
+      Assert.ArgumentNotNull(zip, "zip");
+
+      using (zip)
+      {
+        foreach (var entry in zip.SelectEntries("*"))
+        {
+          var fileName = entry.FileName;
+          var website = "Website/";
+          var virtualPath = fileName.Substring(fileName.IndexOf(website) + website.Length);
+
+          this.WriteLine("Extracting: " + virtualPath);
+
+          var filePath = this.Server.MapPath(virtualPath);
+          if (entry.IsDirectory)
+          {
+            if (!Directory.Exists(filePath))
+            {
+              Directory.CreateDirectory(filePath);
+            }
+          }
+          else
+          {
+            if (File.Exists(filePath))
+            {
+              this.WriteLine("Skipped. Already exists.");
+
+              continue;
+            }
+
+            try
+            {
+              var directoryPath = Path.GetDirectoryName(filePath);
+              if (!Directory.Exists(directoryPath))
+              {
+                Directory.CreateDirectory(directoryPath);
+              }
+
+              using (var file = File.OpenWrite(filePath))
+              {
+                entry.Extract(file);
+              }
+
+              this.WriteLine("Done.");
+            }
+            catch (Exception ex)
+            {
+              this.WriteLine("Failed.");
+              this.WriteLine("- Exception: " + ex.GetType().FullName);
+              this.WriteLine("- Message: " + ex.Message);
+              this.WriteLine("- StackTrace: " + ex.StackTrace.Replace("\n", "<br />"));
+            }
+          }
+        }
+      }
+    }
+
+    [NotNull]
+    private ZipFile GetFileSetZip([NotNull] IRelease release, [NotNull] string type)
+    {
+      Assert.ArgumentNotNull(release, "release");
+      Assert.ArgumentNotNull(type, "type");
+
+      var fileInfo = release.Defaults.Files[type].Download();
+
+      var zipFilePath = fileInfo.FullName;
+      this.WriteLine("Downloaded to " + zipFilePath);
+
+      ZipFile zip;
+
+      this.WriteLine("Extracting " + type + " files...");
+
+      try
+      {
+        zip = new ZipFile(zipFilePath);
+      }
+      catch
+      {
+        this.WriteLine("Cached client files are corrupted. Re-downloading...");
+
+        File.Delete(zipFilePath);
+
+        fileInfo = release.Defaults.Files[type].Download();
+
+        zipFilePath = fileInfo.FullName;
+        this.WriteLine("Downloaded to " + zipFilePath);
+
+        this.WriteLine("Extracting client files...");
+
+        zip = new ZipFile(zipFilePath);
+      }
+
+      return zip;
+    }
+
+    private void DeleteInstallFiles()
+    {
+      File.Delete(this.Server.MapPath("Default.css"));
+      File.Delete(this.Server.MapPath("Default.aspx"));
+      File.Delete(this.Server.MapPath("favicon.ico"));
     }
 
     private void WriteLine([NotNull] string message, bool skipCache = false)
