@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SC-Shell", "Sitecore.Bootcamp\Sitecore.Bootcamp.csproj", "{926BDCE0-5A27-424E-9DC5-8EB2215C009E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Bootcamp", "Sitecore.Bootcamp\Sitecore.Bootcamp.csproj", "{926BDCE0-5A27-424E-9DC5-8EB2215C009E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Bootcamp.Shell", "Sitecore.Bootcamp.Shell\Sitecore.Bootcamp.Shell.csproj", "{9DFF7418-5617-46F8-BB21-4626BB250F9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{926BDCE0-5A27-424E-9DC5-8EB2215C009E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{926BDCE0-5A27-424E-9DC5-8EB2215C009E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{926BDCE0-5A27-424E-9DC5-8EB2215C009E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DFF7418-5617-46F8-BB21-4626BB250F9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DFF7418-5617-46F8-BB21-4626BB250F9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DFF7418-5617-46F8-BB21-4626BB250F9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DFF7418-5617-46F8-BB21-4626BB250F9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

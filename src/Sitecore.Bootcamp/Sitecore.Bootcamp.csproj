@@ -70,6 +70,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Bootcamp.Shell\Sitecore.Bootcamp.Shell.csproj">
+      <Project>{9dff7418-5617-46f8-bb21-4626bb250f9d}</Project>
+      <Name>Sitecore.Bootcamp.Shell</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

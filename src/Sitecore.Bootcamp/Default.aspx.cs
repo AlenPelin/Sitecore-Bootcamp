@@ -46,17 +46,49 @@
           {
             installationStarted = true;
 
-            this.DeleteInstallFiles();
-
             this.WriteLine("Downloading metadata...");
 
             var release = GetRelease();
 
-            this.WriteLine("Downloading client files...");
+            ZipFile client = null;
 
-            var zip = this.GetFileSetZip(release, "client");
+            var installShell = File.Exists(this.Server.MapPath("bin\\Sitecore.Bootcamp.Shell.dll"));
+            if (installShell)
+            {
+              new Thread(() => { client = this.GetFileSetZip(release, "client"); }).Start();
+            }
 
-            this.ExtractClient(zip);
+            using (var def = this.GetFileSetZip(release, "default"))
+            {
+              this.ExtractFileSet(def, "default");
+            }
+
+            if (installShell)
+            {
+              // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
+              while (client == null)
+              {
+                Thread.Sleep(1000);
+              }
+
+              this.ExtractFileSet(client, "client");
+            }
+
+            var webConfigToDeploy = this.Server.MapPath("/App_Config/web.config");
+            if (File.Exists(webConfigToDeploy))
+            {
+              this.WriteLine("Moving /App_Config/web.config to /web.config");
+
+              var webConfig = this.Server.MapPath("/web.config");
+              if (File.Exists(webConfig))
+              {
+                File.Delete(webConfig);
+              }
+
+              File.Move(webConfigToDeploy, webConfig);
+            }
+
+            this.DeleteInstallFiles();
 
             installationFinished = true;
 
@@ -69,7 +101,7 @@
           }
         }
       }
-      
+
       var line = 0;
       while (!installationFinished)
       {
@@ -89,9 +121,12 @@
       }
     }
 
-    private void ExtractClient([NotNull] ZipFile zip)
+    private void ExtractFileSet([NotNull] ZipFile zip, [NotNull] string type)
     {
       Assert.ArgumentNotNull(zip, "zip");
+      Assert.ArgumentNotNull(type, "type");
+
+      this.WriteLine("Extracting " + type + " files...");
 
       using (zip)
       {
@@ -100,8 +135,6 @@
           var fileName = entry.FileName;
           var website = "Website/";
           var virtualPath = fileName.Substring(fileName.IndexOf(website) + website.Length);
-
-          this.WriteLine("Extracting: " + virtualPath);
 
           var filePath = this.Server.MapPath(virtualPath);
           if (entry.IsDirectory)
@@ -115,8 +148,6 @@
           {
             if (File.Exists(filePath))
             {
-              this.WriteLine("Skipped. Already exists.");
-
               continue;
             }
 
@@ -132,8 +163,6 @@
               {
                 entry.Extract(file);
               }
-
-              this.WriteLine("Done.");
             }
             catch (Exception ex)
             {
@@ -153,6 +182,8 @@
       Assert.ArgumentNotNull(release, "release");
       Assert.ArgumentNotNull(type, "type");
 
+      this.WriteLine("Downloading " + type + " files...");
+
       var fileInfo = release.Defaults.Files[type].Download();
 
       var zipFilePath = fileInfo.FullName;
@@ -160,15 +191,13 @@
 
       ZipFile zip;
 
-      this.WriteLine("Extracting " + type + " files...");
-
       try
       {
         zip = new ZipFile(zipFilePath);
       }
       catch
       {
-        this.WriteLine("Cached client files are corrupted. Re-downloading...");
+        this.WriteLine("Cached " + type + " files are corrupted. Re-downloading...");
 
         File.Delete(zipFilePath);
 
@@ -176,8 +205,6 @@
 
         zipFilePath = fileInfo.FullName;
         this.WriteLine("Downloaded to " + zipFilePath);
-
-        this.WriteLine("Extracting client files...");
 
         zip = new ZipFile(zipFilePath);
       }
@@ -191,7 +218,7 @@
       File.Delete(this.Server.MapPath("Default.aspx"));
       File.Delete(this.Server.MapPath("favicon.ico"));
     }
-
+    
     private void WriteLine([NotNull] string message, bool skipCache = false)
     {
       Assert.ArgumentNotNull(message, "message");
@@ -207,7 +234,7 @@
     }
 
     [NotNull]
-    private static IRelease GetRelease()
+    private IRelease GetRelease()
     {
       var kernelVersion = GetKernelVersion();
       var versionName = GetVersionName(kernelVersion);
@@ -245,9 +272,9 @@
     }
 
     [NotNull]
-    private static string GetKernelVersion()
+    private string GetKernelVersion()
     {
-      var kernelVersion = FileVersionInfo.GetVersionInfo("bin\\Sitecore.Kernel.dll").ProductVersion;
+      var kernelVersion = FileVersionInfo.GetVersionInfo(this.Server.MapPath("bin\\Sitecore.Kernel.dll")).ProductVersion;
       Assert.IsNotNullOrEmpty(kernelVersion, "kernelVersion");
 
       return kernelVersion;
