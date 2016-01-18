@@ -32,34 +32,6 @@ namespace Sitecore.Bootcamp.Core
     [NotNull]
     private readonly string[] Packages;
 
-    static BootcampCore()
-    {
-      AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
-      {
-        Assert.ArgumentNotNull(args, "args");
-
-        var currentAssembly = typeof(BootcampCore).Assembly;
-        var assemblyName = args.Name;
-        if (string.IsNullOrEmpty(assemblyName))
-        {
-          return null;
-        }
-
-        var pos = assemblyName.IndexOf(',');
-        var shortName = pos >= 0 ? assemblyName.Substring(0, pos) : assemblyName;
-        var resourceName = "Sitecore.Bootcamp.Properties.EmbeddedResources." + shortName + ".dll";
-        var stream = currentAssembly.GetManifestResourceStream(resourceName);
-        if (stream == null)
-        {
-          return null;
-        }
-
-        var bytes = new byte[stream.Length];
-        stream.Read(bytes, 0, bytes.Length);
-        return Assembly.Load(bytes);
-      };
-    }
-
     public BootcampCore([NotNull] Page page, [NotNull] params string[] packages)
     {
       Assert.ArgumentNotNull(page, "page");
@@ -103,6 +75,8 @@ namespace Sitecore.Bootcamp.Core
           {
             installationStarted = true;
 
+            this.WriteLine("Extracting Sitecore assemblies...");
+
             // 1. Extract SC.*.nupkg
             var nugetPackages = Directory.GetFiles(this.Page.Server.MapPath("/"), "*.nupkg", SearchOption.AllDirectories);
             foreach (var package in nugetPackages)
@@ -111,12 +85,17 @@ namespace Sitecore.Bootcamp.Core
               {
                 foreach (var zipEntry in zip.Entries)
                 {
-                  if (zipEntry == null || zipEntry.FileName == null || !zipEntry.FileName.StartsWith("/lib/"))
+                  if (zipEntry == null || zipEntry.FileName == null || !zipEntry.FileName.StartsWith("lib/"))
                   {
                     continue;
                   }
 
-                  var filePath = this.Page.Server.MapPath("/bin/" + zipEntry.FileName.Substring("/lib/".Length));
+                  var filePath = this.Page.Server.MapPath("/bin/" + zipEntry.FileName.Substring("lib/".Length));
+                  if (File.Exists(filePath))
+                  {
+                    continue;
+                  }
+
                   var dir = Path.GetDirectoryName(filePath);
                   if (!Directory.Exists(dir))
                   {
@@ -133,7 +112,18 @@ namespace Sitecore.Bootcamp.Core
               File.Delete(package);
             }
 
-            // 2. Prepare App_Data
+            // 2. Copy Ninject.dll
+            var sourceNinject = this.Page.MapPath("/bin/Ninject.dll");
+            if (File.Exists(sourceNinject))
+            {
+              var targetNinject = this.Page.MapPath("/bin/Social/Ninject.dll");
+              if (!File.Exists(targetNinject))
+              {
+                File.Copy(sourceNinject, targetNinject);
+              }
+            }
+
+            // 3. Prepare App_Data
             var appData = this.Page.Server.MapPath("/App_Data");
             var appDataFolders = new[]
             {
@@ -153,13 +143,13 @@ namespace Sitecore.Bootcamp.Core
 
             var release = this.GetRelease();
 
-            // 3. Download and extract default files
+            // 4. Download and extract default files
             using (var def = this.GetFileSetZip(release, "default"))
             {
               this.ExtractFileSet(def, "default");
             }
 
-            // 4. Download and extract client files
+            // 5. Download and extract client files
             foreach (var package in this.Packages)
             {
               using (var zip = this.GetFileSetZip(release, package))
@@ -168,7 +158,7 @@ namespace Sitecore.Bootcamp.Core
               }
             }
 
-            // 5. Replace web.config
+            // 6. Replace web.config
             var webConfigToDeploy = this.Page.Server.MapPath("/App_Config/web.config");
             if (File.Exists(webConfigToDeploy))
             {
@@ -185,7 +175,7 @@ namespace Sitecore.Bootcamp.Core
 
             this.Page.Response.Write("<script>setTimeout(function(){ document.location.href=document.location.protocol + '//' + document.location.hostname;},5000);</script></body></html>");
 
-            // 6. Deleting install files
+            // 7. Deleting install files
             this.DeleteInstallFiles();
 
             installationFinished = true;
@@ -317,14 +307,9 @@ namespace Sitecore.Bootcamp.Core
     {
       this.WriteLine("Deleting installer files...");
 
-      File.Delete(this.Page.Server.MapPath("Default.css"));
+      File.Delete(this.Page.Server.MapPath("bin\\Sitecore.Bootcamp.Core.dll"));
 
-      File.Delete(this.Page.Server.MapPath("favicon.ico"));
-
-      File.Delete(this.Page.Server.MapPath("bin\\Sitecore.Bootcamp.dll"));
-
-      var shell = this.Page.Server.MapPath("bin\\Sitecore.Bootcamp.Shell.dll");
-
+      var shell = this.Page.Server.MapPath("bin\\Sitecore.Bootcamp.dll");
       if (File.Exists(shell))
       {
         File.Delete(shell);

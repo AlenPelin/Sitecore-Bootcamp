@@ -10,3 +10,4 @@ src/Sitecore.Bootcamp.Shell/Files.zip
 *.user
 src/Sitecore.Bootcamp.Core/bin/
 src/Sitecore.Bootcamp.Core/obj/
+*.pubxml

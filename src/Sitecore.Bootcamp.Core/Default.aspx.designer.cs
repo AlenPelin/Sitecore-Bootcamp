@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Bootcamp {
+namespace Sitecore.Bootcamp.Core {
     
     
     public partial class Default {
