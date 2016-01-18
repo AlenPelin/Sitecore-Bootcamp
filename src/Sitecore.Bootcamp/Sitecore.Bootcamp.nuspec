@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Sitecore.Bootcamp</id>
+    <version>0.0.1.0</version>
+    <authors>Alen Pelin</authors>
+    <owners>Sitecore</owners>
+    <projectUrl>https://github.com/Sitecore/Sitecore-Bootcamp</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Downloads and installs missing Sitecore files.</description>
+    <dependencies>
+      <dependency id="Sitecore.Bootcamp.Core" version="0.0.1.0" />      
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Sitecore.Bootcamp.dll" target="lib\Sitecore.Bootcamp.dll" />
+    <file src="bin\Sitecore.Bootcamp.pdb" target="lib\Sitecore.Bootcamp.pdb" />
+    <file src="bin\Sitecore.Bootcamp.dll" target="content\bin\Sitecore.Bootcamp.dll" />
+    <file src="bin\Sitecore.Bootcamp.pdb" target="content\bin\Sitecore.Bootcamp.pdb" />
+    <file src="Default.aspx" target="content\Default.aspx" />
+    <file src="Default.css" target="content\Default.css" />
+    <file src="favicon.ico" target="content\favicon.ico" />
+  </files>
+</package>

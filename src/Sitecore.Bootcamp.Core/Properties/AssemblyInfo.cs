@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Sitecore.Bootcamp")]
+[assembly: AssemblyTitle("Sitecore.Bootcamp.Core")]
 [assembly: AssemblyProduct("Sitecore.Bootcamp")]
 [assembly: AssemblyCopyright("Copyright © Sitecore 2016")]
 [assembly: ComVisible(false)]

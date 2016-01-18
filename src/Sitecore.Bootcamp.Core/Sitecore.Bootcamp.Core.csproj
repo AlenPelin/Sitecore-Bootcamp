@@ -7,18 +7,19 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{725E27CE-B71D-4093-9371-79D837B5886D}</ProjectGuid>
+    <ProjectGuid>{926BDCE0-5A27-424E-9DC5-8EB2215C009E}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sitecore.Bootcamp</RootNamespace>
-    <AssemblyName>Sitecore.Bootcamp</AssemblyName>
+    <RootNamespace>Sitecore.Bootcamp.Core</RootNamespace>
+    <AssemblyName>Sitecore.Bootcamp.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <ApplicationInsightsResourceId>/subscriptions/7588d1ce-5746-4cb4-90d3-0546575e8710/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/SC-Shell</ApplicationInsightsResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,11 +39,48 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.7.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetZip.1.9.7\lib\net20\Ionic.Zip.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Diagnostics.Base, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2a430da507ea8b02, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Diagnostics.Base.1.0.0.24\lib\net35\Sitecore.Diagnostics.Base.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Diagnostics.Database">
+      <HintPath>..\packages\Sitecore.Diagnostics.Database.1.0.0.8\lib\net40\Sitecore.Diagnostics.Database.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Diagnostics.InformationService.Client, Version=1.3.0.0, Culture=neutral, PublicKeyToken=f9a5856b52eceddf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Sitecore.Diagnostics.InformationService.Client.1.3.0.4\lib\net40\Sitecore.Diagnostics.InformationService.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\packages\Sitecore.Diagnostics.Base.1.0.0.24\lib\net35\Sitecore.Diagnostics.Base.dll">
+      <Link>Properties\EmbeddedResources\Sitecore.Diagnostics.Base.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\packages\Sitecore.Diagnostics.Database.1.0.0.8\lib\net40\Sitecore.Diagnostics.Database.dll">
+      <Link>Properties\EmbeddedResources\Sitecore.Diagnostics.Database.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\packages\Sitecore.Diagnostics.InformationService.Client.1.3.0.4\lib\net40\Sitecore.Diagnostics.InformationService.Client.dll">
+      <Link>Properties\EmbeddedResources\Sitecore.Diagnostics.InformationService.Client.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\packages\DotNetZip.1.9.7\lib\net20\Ionic.Zip.dll">
+      <Link>Properties\EmbeddedResources\Ionic.Zip.dll</Link>
+    </EmbeddedResource>
+    <Content Include="favicon.ico" />
+    <Content Include="Default.aspx" />
+    <Content Include="Default.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BootcampCore.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -53,18 +91,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Default.aspx" />
+    <Content Include="Sitecore.Bootcamp.Core.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Default.css" />
-    <Content Include="favicon.ico" />
-    <Content Include="Sitecore.Bootcamp.nuspec" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Sitecore.Bootcamp.Core\Sitecore.Bootcamp.Core.csproj">
-      <Project>{926bdce0-5a27-424e-9dc5-8eb2215c009e}</Project>
-      <Name>Sitecore.Bootcamp.Core</Name>
-    </ProjectReference>
+    <Content Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -79,9 +109,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>51673</DevelopmentServerPort>
+          <DevelopmentServerPort>60520</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51673/</IISUrl>
+          <IISUrl>http://localhost:60520/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

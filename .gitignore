@@ -8,3 +8,5 @@ src/Sitecore.Bootcamp.Shell/bin/
 src/Sitecore.Bootcamp.Shell/Files.zip
 *.suo
 *.user
+src/Sitecore.Bootcamp.Core/bin/
+src/Sitecore.Bootcamp.Core/obj/
