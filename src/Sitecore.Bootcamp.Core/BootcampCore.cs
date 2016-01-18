@@ -119,6 +119,12 @@ namespace Sitecore.Bootcamp.Core
               var targetNinject = this.Page.MapPath("/bin/Social/Ninject.dll");
               if (!File.Exists(targetNinject))
               {
+                var dir = Path.GetDirectoryName(targetNinject);
+                if (!Directory.Exists(dir))
+                {
+                  Directory.CreateDirectory(dir);
+                }
+
                 File.Copy(sourceNinject, targetNinject);
               }
             }
