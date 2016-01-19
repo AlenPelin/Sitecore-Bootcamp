@@ -13,10 +13,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Sitecore.Bootcamp.dll" target="lib\Sitecore.Bootcamp.dll" />
-    <file src="bin\Sitecore.Bootcamp.pdb" target="lib\Sitecore.Bootcamp.pdb" />
-    <file src="bin\Sitecore.Bootcamp.dll" target="content\bin\Sitecore.Bootcamp.dll" />
-    <file src="bin\Sitecore.Bootcamp.pdb" target="content\bin\Sitecore.Bootcamp.pdb" />
     <file src="Default.aspx" target="content\Default.aspx" />
   </files>
 </package>

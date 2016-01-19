@@ -20,6 +20,5 @@
     <file src="bin\Sitecore.Bootcamp.Core.pdb" target="lib\Sitecore.Bootcamp.Core.pdb" />
     <file src="bin\Sitecore.Bootcamp.Core.dll" target="content\bin\Sitecore.Bootcamp.Core.dll" />
     <file src="bin\Sitecore.Bootcamp.Core.pdb" target="content\bin\Sitecore.Bootcamp.Core.pdb" />
-    <file src="Default.aspx" target="content\Default.aspx" />
   </files>
 </package>
