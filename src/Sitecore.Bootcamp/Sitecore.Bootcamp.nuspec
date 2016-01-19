@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Sitecore.Bootcamp</id>
-    <version>0.0.2.2</version>
+    <version>0.0.2.3</version>
     <authors>Alen Pelin</authors>
     <owners>Sitecore</owners>
     <projectUrl>https://github.com/Sitecore/Sitecore-Bootcamp</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Downloads and installs missing Sitecore and Sitecore Shell files.</description>
     <dependencies>
-      <dependency id="Sitecore.Bootcamp.Core" version="0.0.2.2" />      
+      <dependency id="Sitecore.Bootcamp.Core" version="0.0.2.3" />      
     </dependencies>
   </metadata>
   <files>
