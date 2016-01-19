@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,9 +42,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\Keys\SitecoreLicense\AU\license.xml">
-      <Link>App_Data\license.xml</Link>
-    </Content>
     <Content Include="..\Sitecore.Bootcamp\Default.aspx">
       <Link>Default.aspx</Link>
     </Content>
@@ -73,6 +71,10 @@
       <HintPath>..\packages\Sitecore.Diagnostics.Base.1.0.0.24\lib\net35\Sitecore.Diagnostics.Base.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Diagnostics.ConfigBuilder, Version=1.0.0.0, Culture=neutral, PublicKeyToken=835b316ca91bcd48, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Diagnostics.ConfigBuilder.1.0.0.16\lib\net35\Sitecore.Diagnostics.ConfigBuilder.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Sitecore.Diagnostics.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1eb7b03b14a31fae, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Sitecore.Diagnostics.Database.1.0.0.8\lib\net40\Sitecore.Diagnostics.Database.dll</HintPath>
@@ -91,9 +93,15 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\license.xml" />
     <Content Include="packages.config" />
     <Content Include="App_Config\Include\zzz\UseServerSideRedirect.config" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
+    <Content Include="Web_Config\Include\Membership.DisablePasswordReset.config" />
+    <Content Include="Web_Config\Include\Membership.DeleteSwitcher.config" />
+    <Content Include="Web_Config\Include\AppSettings.ServerName.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -13,3 +13,5 @@ src/Sitecore.Bootcamp.Core/obj/
 *.pubxml
 src/Sitecore.Bootcamp.SampleSite/bin/
 src/Sitecore.Bootcamp.SampleSite/obj/
+src/Sitecore.Bootcamp.Core.UnitTests/obj/
+src/Sitecore.Bootcamp.Core.UnitTests/bin/

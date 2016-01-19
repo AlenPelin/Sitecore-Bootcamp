@@ -21,6 +21,7 @@
       new InstallClientFiles(), 
       new MoveWebConfig(),
       new InstallConfigFiles(),
+      new MergeWebConfigIncludes(),
       new SendRefreshBrowserCommand(),
       new DeleteBootcampFiles()
     };
