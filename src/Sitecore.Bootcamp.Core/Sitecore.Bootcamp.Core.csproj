@@ -68,13 +68,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootcampCore.cs" />
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="InstallMode.cs" />
+    <Compile Include="Processors\CopyNinjectAssembly.cs" />
+    <Compile Include="Processors\CreateDataFolders.cs" />
+    <Compile Include="Processors\DeleteBootcampFiles.cs" />
+    <Compile Include="Processors\ExtractBundledNuGetPackages.cs" />
+    <Compile Include="Processors\ExtractNuGetPackageBase.cs" />
+    <Compile Include="Processors\ExtractProgramDataNuGetPackage.cs" />
+    <Compile Include="Processors\InstallClientFiles.cs" />
+    <Compile Include="Processors\InstallConfigFiles.cs" />
+    <Compile Include="Processors\InstallDatabaseProcessorBase.cs" />
+    <Compile Include="Processors\InstallDefaultFiles.cs" />
+    <Compile Include="Processors\InstallFilesBase.cs" />
+    <Compile Include="Processors\InstallMonogoDatabases.cs" />
+    <Compile Include="Processors\InstallSqlDatabases.cs" />
+    <Compile Include="Processors\LoadConnectionStringsConfig.cs" />
+    <Compile Include="Processors\MoveWebConfig.cs" />
+    <Compile Include="Pipeline.cs" />
+    <Compile Include="Processors\DownloadReleaseMetadata.cs" />
+    <Compile Include="Processors\Processor.cs" />
+    <Compile Include="Processors\ProcessorArgs.cs" />
+    <Compile Include="Processors\SaveConnectionStringsConfig.cs" />
+    <Compile Include="Processors\SendRefreshBrowserCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +100,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
