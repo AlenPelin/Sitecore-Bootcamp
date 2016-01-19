@@ -11,3 +11,5 @@ src/Sitecore.Bootcamp.Shell/Files.zip
 src/Sitecore.Bootcamp.Core/bin/
 src/Sitecore.Bootcamp.Core/obj/
 *.pubxml
+src/Sitecore.Bootcamp.SampleSite/bin/
+src/Sitecore.Bootcamp.SampleSite/obj/
