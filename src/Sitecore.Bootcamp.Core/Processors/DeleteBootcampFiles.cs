@@ -11,15 +11,7 @@
 
       args.WriteLine("Deleting installer files...");
 
-      File.Delete(args.Server.MapPath("bin\\Sitecore.Bootcamp.Core.dll"));
-
-      var shell = args.Server.MapPath("bin\\Sitecore.Bootcamp.dll");
-      if (File.Exists(shell))
-      {
-        File.Delete(shell);
-      }
-
-      File.Delete(args.Server.MapPath("Default.aspx"));
+      File.Move(args.Server.MapPath("Default.aspx"), args.Server.MapPath("/App_Data/Default.aspx.disabled"));
     }
   }
 }
