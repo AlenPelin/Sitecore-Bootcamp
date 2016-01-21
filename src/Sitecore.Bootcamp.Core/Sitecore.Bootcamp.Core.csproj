@@ -91,6 +91,7 @@
     <Compile Include="Processors\ProcessorArgs.cs" />
     <Compile Include="Processors\SaveConnectionStringsConfig.cs" />
     <Compile Include="Processors\SendRefreshBrowserCommand.cs" />
+    <Compile Include="Processors\SetDataFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
