@@ -12,6 +12,7 @@
       new ExtractProgramDataNuGetPackage(), 
       new ExtractBundledNuGetPackages(),
       new CopyNinjectAssembly(),
+      new SetDataFolder(), 
       new CreateDataFolders(),
       new LoadConnectionStringsConfig(),
       new InstallSqlDatabases(),
