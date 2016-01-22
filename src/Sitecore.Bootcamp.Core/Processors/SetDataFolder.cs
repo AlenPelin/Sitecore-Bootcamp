@@ -10,7 +10,7 @@ namespace Sitecore.Bootcamp.Core.Processors
   {
     internal override void Process(ProcessorArgs args)
     {
-      var dataFolder = args.Server.MapPath("/App_Data/Include/zzz/DataFolder.config");
+      var dataFolder = args.Server.MapPath("/App_Config/Include/zzz/DataFolder.config");
       if (!File.Exists(dataFolder))
       {
         var dir = Path.GetDirectoryName(dataFolder);
