@@ -12,6 +12,7 @@
       new ExtractProgramDataNuGetPackage(), 
       new ExtractBundledNuGetPackages(),
       new CopyNinjectAssembly(),
+      new DeleteRoslynAssemblies(), 
       new SetDataFolder(), 
       new CreateDataFolders(),
       new LoadConnectionStringsConfig(),
