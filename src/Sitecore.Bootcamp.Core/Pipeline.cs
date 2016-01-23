@@ -1,5 +1,6 @@
-﻿namespace Sitecore.Bootcamp.Core.Processors
+﻿namespace Sitecore.Bootcamp.Core
 {
+  using Sitecore.Bootcamp.Core.Processors;
   using Sitecore.Diagnostics.Base;
   using Sitecore.Diagnostics.Base.Annotations;
 

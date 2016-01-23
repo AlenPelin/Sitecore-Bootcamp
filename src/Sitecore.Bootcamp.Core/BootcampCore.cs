@@ -116,6 +116,8 @@ namespace Sitecore.Bootcamp.Core
         {
           Pipeline.Run(new ProcessorArgs(this, this.Mode));
 
+          this.WriteLine("Initializing Sitecore...");
+
           app.Add("bootcamp-done", new object());
 
           this.Page.Response.Close();

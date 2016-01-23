@@ -8,7 +8,7 @@
     {
       Assert.ArgumentNotNull(args, "args");
 
-      args.WriteLine("<script>setTimeout(function(){ document.location.href=document.location.protocol + '//' + document.location.hostname;},5000);</script></body></html>", true);
+      args.WriteLine("Scheduling page refresh in 5 seconds...<script>setTimeout(function(){ document.location.href=document.location.protocol + '//' + document.location.hostname;},5000);</script></body></html>", true);
     }
   }
 }
