@@ -12,6 +12,7 @@
       new DownloadReleaseMetadata(),
       new ExtractProgramDataNuGetPackage(), 
       new ExtractBundledNuGetPackages(),
+      new MoveAssembliesToBinFolder(), 
       new CopyNinjectAssembly(),
       new DeleteRoslynAssemblies(), 
       new SetDataFolder(), 
