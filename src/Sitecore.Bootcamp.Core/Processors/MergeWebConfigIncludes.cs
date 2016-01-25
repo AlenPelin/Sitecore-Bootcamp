@@ -31,7 +31,13 @@ namespace Sitecore.Bootcamp.Core.Processors
       var rootPath = Path.GetDirectoryName(webConfigPath);
       Assert.IsNotNull(rootPath, "rootPath");
 
-      var includeFolder = Path.Combine(rootPath, "Web_Config/Include");
+      var webConfigFolder = Path.Combine(rootPath, "Web_Config");
+      if (!Directory.Exists(webConfigFolder))
+      {
+        return null;
+      }
+
+      var includeFolder = Path.Combine(webConfigFolder, "Include");
       if (!Directory.Exists(includeFolder))
       {
         return null;
@@ -111,6 +117,11 @@ namespace Sitecore.Bootcamp.Core.Processors
 
         var output = new XmlDocument();
         output.LoadXml(result.OuterXml.Replace("config__Source__disabled=", "configSource="));
+
+        if (Directory.Exists(webConfigFolder))
+        {
+          Directory.Delete(webConfigFolder);
+        }
 
         return output;
       }
