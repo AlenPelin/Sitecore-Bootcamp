@@ -4,7 +4,6 @@
   using System.Data.SqlClient;
   using System.IO;
   using System.Linq;
-  using System.Xml;
   using Ionic.Zip;
   using Sitecore.Diagnostics.Base;
   using Sitecore.Diagnostics.Base.Annotations;

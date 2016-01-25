@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-
-namespace Sitecore.Bootcamp.Core.Processors
+﻿namespace Sitecore.Bootcamp.Core.Processors
 {
+  using System.IO;
+
   internal class SetDataFolder : Processor
   {
     internal override void Process(ProcessorArgs args)

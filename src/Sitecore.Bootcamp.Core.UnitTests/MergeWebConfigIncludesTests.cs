@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using System.Xml;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sitecore.Bootcamp.Core.Processors;
-
-namespace Sitecore.Bootcamp.Core.UnitTests
+﻿namespace Sitecore.Bootcamp.Core.UnitTests
 {
+  using System.IO;
+  using System.Xml;
+  using Microsoft.VisualStudio.TestTools.UnitTesting;
+  using Sitecore.Bootcamp.Core.Processors;
+
   [TestClass]
   public class MergeWebConfigIncludesTests
   {

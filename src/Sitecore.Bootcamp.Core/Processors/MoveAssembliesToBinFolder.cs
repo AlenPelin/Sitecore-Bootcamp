@@ -1,8 +1,8 @@
-﻿using System;
-using System.IO;
-
-namespace Sitecore.Bootcamp.Core.Processors
+﻿namespace Sitecore.Bootcamp.Core.Processors
 {
+  using System;
+  using System.IO;
+
   public class MoveAssembliesToBinFolder : Processor
   {
     internal override void Process(ProcessorArgs args)

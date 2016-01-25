@@ -1,18 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml;
-using Sitecore.Diagnostics.Base;
-using Sitecore.Diagnostics.Base.Annotations;
-using Sitecore.Diagnostics.ConfigBuilder;
-
 namespace Sitecore.Bootcamp.Core.Processors
 {
+  using System.Collections.Generic;
+  using System.IO;
+  using System.Linq;
+  using System.Xml;
+  using Sitecore.Diagnostics.Base;
+  using Sitecore.Diagnostics.ConfigBuilder;
+
   internal class MergeWebConfigIncludes : Processor
   {
-    internal override void Process([NotNull] ProcessorArgs args)
+    internal override void Process(ProcessorArgs args)
     {
       args.WriteLine("Merging web.config include files...");
 
