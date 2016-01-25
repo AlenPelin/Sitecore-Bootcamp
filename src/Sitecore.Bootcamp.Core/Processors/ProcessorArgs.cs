@@ -39,7 +39,7 @@
     {
       Assert.ArgumentNotNull(message, "message");
 
-      this.BootcampCore.WriteLine(message, false, bypassNoisy);
+      this.BootcampCore.WriteLine(message, bypassNoisy);
     }
   }
 }

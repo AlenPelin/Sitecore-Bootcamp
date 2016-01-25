@@ -53,7 +53,7 @@ namespace Sitecore.Bootcamp.Core
       }
     }
 
-    internal void WriteLine([NotNull] string message, bool skipCache = false, bool bypassNoisy = false)
+    internal void WriteLine([NotNull] string message, bool bypassNoisy = false)
     {
       Assert.ArgumentNotNull(message, "message");
 
@@ -61,15 +61,8 @@ namespace Sitecore.Bootcamp.Core
       {
         return;
       }
-
-      if (!skipCache)
-      {
-        Messages.Add(message);
-      }
-
-      this.Page.Response.Write(message);
-      this.Page.Response.Write("<br />");
-      this.Page.Response.Flush();
+      
+      Messages.Add(message);
     }
 
     private void Process()
@@ -84,7 +77,7 @@ namespace Sitecore.Bootcamp.Core
       var license = this.Page.Server.MapPath("/App_Data/License.xml");
       if (!File.Exists(license))
       {
-        this.WriteLine("No license.xml file is detected in /App_Data folder", false, true);
+        this.WriteLine("No license.xml file is detected in /App_Data folder", true);
         return;
       }
 
@@ -142,7 +135,9 @@ namespace Sitecore.Bootcamp.Core
         {
           for (var i = line; i < Messages.Count; ++i)
           {
-            this.WriteLine(Messages[i], true);
+            this.Page.Response.Write(Messages[i]);
+            this.Page.Response.Write("<br />");
+            this.Page.Response.Flush();
             line++;
           }
         }
