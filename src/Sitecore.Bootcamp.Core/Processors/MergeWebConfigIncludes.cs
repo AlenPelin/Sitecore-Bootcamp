@@ -117,7 +117,7 @@ namespace Sitecore.Bootcamp.Core.Processors
 
         if (Directory.Exists(webConfigFolder))
         {
-          Directory.Delete(webConfigFolder);
+          Directory.Delete(webConfigFolder, true);
         }
 
         return output;

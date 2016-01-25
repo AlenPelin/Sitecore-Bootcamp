@@ -9,7 +9,7 @@ namespace Sitecore.Bootcamp.Core.Processors
       var roslyn = args.Server.MapPath("/bin/roslyn");
       if (Directory.Exists(roslyn))
       {
-        Directory.Delete(roslyn);
+        Directory.Delete(roslyn, true);
       }
     }
   }
