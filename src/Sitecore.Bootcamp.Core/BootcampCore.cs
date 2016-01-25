@@ -114,15 +114,16 @@ namespace Sitecore.Bootcamp.Core
 
         if (start)
         {
-          Pipeline.Run(new ProcessorArgs(this, this.Mode));
+          ThreadStart action = delegate
+          {
+            Pipeline.Run(new ProcessorArgs(this, this.Mode));
 
-          this.WriteLine("Initializing Sitecore...");
+            this.WriteLine("Initializing Sitecore...");
 
-          app.Add("bootcamp-done", new object());
+            app.Add("bootcamp-done", new object());
+          };
 
-          this.Page.Response.Close();
-
-          return;
+          new Thread(action).Start();
         }
       }
 
