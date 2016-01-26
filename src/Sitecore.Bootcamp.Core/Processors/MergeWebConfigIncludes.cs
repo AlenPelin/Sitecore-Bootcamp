@@ -14,6 +14,7 @@ namespace Sitecore.Bootcamp.Core.Processors
       args.WriteLine("Merging web.config include files...");
 
       var webConfigPath = args.Server.MapPath("/web.config");
+      Assert.IsTrue(File.Exists(webConfigPath), "The /web.config file does not exist");
       var result = this.Process(webConfigPath);
       if (result == null)
       {

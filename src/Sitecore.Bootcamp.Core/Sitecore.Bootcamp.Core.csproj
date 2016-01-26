@@ -69,6 +69,9 @@
   <ItemGroup>
     <Compile Include="BootcampCore.cs" />
     <Compile Include="InstallMode.cs" />
+    <Compile Include="Processors\CheckLockFile.cs" />
+    <Compile Include="Processors\DeleteLockFile.cs" />
+    <Compile Include="Processors\ExtractProgramDataNuGetPackage.cs" />
     <Compile Include="Processors\MoveAssembliesToBinFolder.cs" />
     <Compile Include="Processors\CopyNinjectAssembly.cs" />
     <Compile Include="Processors\CreateDataFolders.cs" />
@@ -76,7 +79,6 @@
     <Compile Include="Processors\DeleteRoslynAssemblies.cs" />
     <Compile Include="Processors\ExtractBundledNuGetPackages.cs" />
     <Compile Include="Processors\ExtractNuGetPackageBase.cs" />
-    <Compile Include="Processors\ExtractProgramDataNuGetPackage.cs" />
     <Compile Include="Processors\InstallClientFiles.cs" />
     <Compile Include="Processors\InstallConfigFiles.cs" />
     <Compile Include="Processors\InstallDatabaseProcessorBase.cs" />
@@ -92,7 +94,6 @@
     <Compile Include="Processors\Processor.cs" />
     <Compile Include="Processors\ProcessorArgs.cs" />
     <Compile Include="Processors\SaveConnectionStringsConfig.cs" />
-    <Compile Include="Processors\SendRefreshBrowserCommand.cs" />
     <Compile Include="Processors\SetDataFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

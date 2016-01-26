@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" %>
 
 <%@ Import Namespace="Sitecore.Bootcamp.Core" %>
 <%@ Import Namespace="Sitecore.Diagnostics.Base.Annotations" %>

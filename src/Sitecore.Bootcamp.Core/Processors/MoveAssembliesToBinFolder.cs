@@ -14,21 +14,6 @@
         Directory.CreateDirectory(bin);
       }
 
-      var assemblies = Directory.GetFiles(root, "*.dll", SearchOption.AllDirectories);
-      foreach (var path in assemblies)
-      {
-        if (string.IsNullOrEmpty(path) || path.StartsWith(bin, StringComparison.OrdinalIgnoreCase))
-        {
-          continue;
-        }
-
-        var targetPath = Path.Combine(path, Path.Combine(bin, Path.GetFileName(path)));
-        if (!File.Exists(targetPath))
-        {
-          File.Move(path, targetPath);
-        }
-      }
-
       var appBin = Path.Combine(root, "App_Bin");
       if (!Directory.Exists(appBin))
       {

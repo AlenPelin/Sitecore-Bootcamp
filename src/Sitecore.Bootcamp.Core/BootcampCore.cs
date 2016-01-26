@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+using System.ComponentModel;
+
 namespace Sitecore.Bootcamp.Core
 {
   using System;
-  using System.Collections.Generic;
   using System.IO;
   using System.Threading;
   using System.Web.UI;
@@ -14,9 +16,6 @@ namespace Sitecore.Bootcamp.Core
     [NotNull]
     internal readonly Page Page;
 
-    [NotNull]
-    private static readonly List<string> Messages = new List<string>();
-
     private static bool installationStarted;
 
     private static bool installationFinished;
@@ -24,6 +23,9 @@ namespace Sitecore.Bootcamp.Core
     private readonly BootcampMode Mode;
 
     private readonly bool Noisy;
+
+    [NotNull]
+    private readonly List<string> Messages = new List<string>();
 
     internal BootcampCore([NotNull] Page page, BootcampMode mode, bool noisy)
     {
@@ -43,13 +45,86 @@ namespace Sitecore.Bootcamp.Core
 
     public void Install()
     {
-      try
+      this.Page.Server.ScriptTimeout = int.MaxValue;
+      this.Page.Response.StatusCode = 503;
+
+      var lockFilePath = this.Page.Server.MapPath("lock.txt");
+      if (File.Exists(lockFilePath))
       {
-        this.Process();
+        while (File.Exists(lockFilePath))
+        {
+          Thread.Sleep(1000);
+        }
+
+        this.Page.Response.Redirect("/");
       }
-      catch (Exception ex)
+
+      File.Open(lockFilePath, FileMode.CreateNew)
+        .Close();
+
+      var worker = new BackgroundWorker();
+      worker.DoWork += delegate
       {
-        this.WriteLine("Error. " + ex.Message + "<br />Exception: " + ex.GetType().FullName + "<br />StackTrace: " + (ex.StackTrace ?? string.Empty).Replace(Environment.NewLine, "<br />"));
+        try
+        {
+          var app = this.Page.Application;
+          Assert.IsNotNull(app, "app");
+
+          // check kernel
+          var kernel1 = this.Page.Server.MapPath("/bin/Sitecore.Kernel.dll");
+          var kernel2 = this.Page.Server.MapPath("/App_Bin/Sitecore.Kernel.dll");
+          if (!File.Exists(kernel1) && !File.Exists(kernel2))
+          {
+            throw new InvalidOperationException("No Sitecore.Kernel.dll file is detected in both /bin and /App_Bin folders");
+          }
+
+          // check license
+          var license = this.Page.Server.MapPath("/App_Data/License.xml");
+          if (!File.Exists(license))
+          {
+            throw new InvalidOperationException("No license.xml file is detected in /App_Data folder");
+          }
+
+          this.WriteLine("Installing Sitecore...");
+          this.WriteLine("");
+          this.WriteLine("IMPORTANT! The installation log only available in this request, all the rest requests will be waiting silently.");
+          this.WriteLine("");
+
+          Pipeline.Run(new ProcessorArgs(this, this.Mode));
+
+          this.WriteLine("");
+          this.WriteLine("Sitecore is starting now...<script>setTimeout(function(){ document.location.href=document.location.protocol + '//' + document.location.hostname;},20000);</script></body></html>");
+        }
+        finally
+        {
+          if (File.Exists(lockFilePath))
+          {
+            File.Delete(lockFilePath);
+          }
+        }
+      };
+
+      worker.RunWorkerAsync();
+
+      var last = 0;
+      while (File.Exists(lockFilePath))
+      {
+        if (Noisy && last < Messages.Count)
+        {
+          for (var i = last; i < Messages.Count; ++i)
+          {
+            lock (Messages)
+            {
+              this.Page.Response.Write(Messages[i] + "<br />");
+            }
+
+            last = i + 1;
+          }
+
+          this.Page.Response.Flush();
+        }
+
+        Thread.Sleep(1000);
       }
     }
 
@@ -61,94 +136,11 @@ namespace Sitecore.Bootcamp.Core
       {
         return;
       }
-      
-      Messages.Add(message);
-    }
 
-    private void Process()
-    {
-      this.Page.Server.ScriptTimeout = int.MaxValue;
-      this.Page.Response.StatusCode = 503;
-
-      this.Page.Response.Write("<html><head><title>Installing Sitecore...</title><style>body { font-family: consolas, courier new; }</style></head><body>Installing Sitecore...<br />");
-      this.Page.Response.Flush();
-
-      // check license
-      var license = this.Page.Server.MapPath("/App_Data/License.xml");
-      if (!File.Exists(license))
+      lock (Messages)
       {
-        this.WriteLine("No license.xml file is detected in /App_Data folder", true);
-        return;
+        this.Messages.Add(message);
       }
-
-      var app = this.Page.Application;
-      Assert.IsNotNull(app, "app");
-
-      if (app["bootcamp-started"] == null)
-      {
-        var start = false;
-        var mutex = new Mutex(true, "bootcamp-mutex");        
-        try
-        {
-          mutex.WaitOne(1000);
-          if (app["bootcamp-started"] == null)
-          {
-            app.Add("bootcamp-started", new object());
-            start = true;
-          }
-        }
-        catch
-        {
-        }
-        finally 
-        {
-          mutex.ReleaseMutex();
-        }
-
-        if (start)
-        {
-          ThreadStart action = delegate
-          {
-            Pipeline.Run(new ProcessorArgs(this, this.Mode));
-
-            this.WriteLine("Initializing Sitecore...");
-
-            app.Add("bootcamp-done", new object());
-          };
-
-          new Thread(action).Start();
-        }
-      }
-
-      this.PrintConsole();
-    }
-
-    private void PrintConsole()
-    {
-      var app = this.Page.Application;
-      Assert.IsNotNull(app, "app");
-
-      var line = 0;
-      while (app["bootcamp-done"] == null)
-      {
-        try
-        {
-          for (var i = line; i < Messages.Count; ++i)
-          {
-            this.Page.Response.Write(Messages[i]);
-            this.Page.Response.Write("<br />");
-            this.Page.Response.Flush();
-            line++;
-          }
-        }
-        catch
-        {
-        }
-
-        Thread.Sleep(500);
-      }
-
-      this.Page.Response.Close();
     }
   }
 }
