@@ -49,7 +49,9 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="web.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sitecore.Bootcamp.Core\Sitecore.Bootcamp.Core.csproj">
       <Project>{926bdce0-5a27-424e-9dc5-8eb2215c009e}</Project>
@@ -83,6 +85,10 @@
       <HintPath>..\packages\Sitecore.Diagnostics.InformationService.Client.1.3.0.5\lib\net40\Sitecore.Diagnostics.InformationService.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Kernel, Version=8.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SC.Sitecore.Kernel.8.1.0.151207\lib\Sitecore.Kernel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
   </ItemGroup>
@@ -95,6 +101,14 @@
     <Content Include="Web_Config\Include\AppSettings.ServerName.config">
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
