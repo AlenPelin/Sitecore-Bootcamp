@@ -45,7 +45,9 @@
     <Content Include="..\Sitecore.Bootcamp\Default.aspx">
       <Link>Default.aspx</Link>
     </Content>
-    <Content Include="App_Config\Include\zzz\DataFolder.config" />
+    <Content Include="App_Config\Include\zzz\DataFolder.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -88,7 +90,6 @@
     <Content Include="App_Data\license.xml" />
     <Content Include="App_Config\Include\zzz\UseServerSideRedirect.config" />
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <Content Include="Web_Config\Include\Membership.DisablePasswordReset.config" />
     <Content Include="Web_Config\Include\Membership.DeleteSwitcher.config" />
     <Content Include="Web_Config\Include\AppSettings.ServerName.config">

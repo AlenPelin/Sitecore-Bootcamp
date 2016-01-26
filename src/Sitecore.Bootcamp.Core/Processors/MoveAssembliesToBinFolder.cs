@@ -28,6 +28,31 @@
           File.Move(path, targetPath);
         }
       }
+
+      var appBin = Path.Combine(root, "App_Bin");
+      if (!Directory.Exists(appBin))
+      {
+        return;
+      }
+
+      var files = Directory.GetFiles(appBin, "*", SearchOption.AllDirectories);
+      foreach (var sourcePath in files)
+      {
+        if (sourcePath == null)
+        {
+          continue;
+        }
+
+        var virtualPath = sourcePath.Substring(appBin.Length).TrimStart("/\\".ToCharArray());
+        var targetPath = Path.Combine(bin, virtualPath);
+        var dir = Path.GetDirectoryName(targetPath);
+        if (!Directory.Exists(dir))
+        {
+          Directory.CreateDirectory(dir);
+        }
+
+        File.Move(sourcePath, targetPath);
+      }
     }
   }
 }
