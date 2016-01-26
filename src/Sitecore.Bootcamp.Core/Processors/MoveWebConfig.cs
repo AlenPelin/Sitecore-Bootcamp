@@ -10,15 +10,14 @@
       Assert.ArgumentNotNull(args, "args");
 
       var root = args.Server.MapPath("/");
-      var targetFolder = Path.Combine(root, "Web_Config/Include");
       var webConfig = Path.Combine(root, "web.config");
       if (!File.Exists(webConfig))
       {
         return;
       }
 
-      args.WriteLine("Moving /App_Config/web.config to /web.config");
-
+      args.WriteLine("Moving /web.config to /Web_Config/Include/!root_web_config.config");
+      var targetFolder = Path.Combine(root, "Web_Config/Include");
       var targetWebConfig = Path.Combine(targetFolder, "!root_web_config.config");
       if(File.Exists(targetWebConfig))
       {
