@@ -61,70 +61,43 @@ namespace Sitecore.Bootcamp.Core
 
       File.Open(lockFilePath, FileMode.CreateNew)
         .Close();
-
-      var worker = new BackgroundWorker();
-      worker.DoWork += delegate
+      
+      try
       {
-        try
+        var app = this.Page.Application;
+        Assert.IsNotNull(app, "app");
+
+        // check kernel
+        var kernel1 = this.Page.Server.MapPath("/bin/Sitecore.Kernel.dll");
+        var kernel2 = this.Page.Server.MapPath("/App_Bin/Sitecore.Kernel.dll");
+        if (!File.Exists(kernel1) && !File.Exists(kernel2))
         {
-          var app = this.Page.Application;
-          Assert.IsNotNull(app, "app");
-
-          // check kernel
-          var kernel1 = this.Page.Server.MapPath("/bin/Sitecore.Kernel.dll");
-          var kernel2 = this.Page.Server.MapPath("/App_Bin/Sitecore.Kernel.dll");
-          if (!File.Exists(kernel1) && !File.Exists(kernel2))
-          {
-            throw new InvalidOperationException("No Sitecore.Kernel.dll file is detected in both /bin and /App_Bin folders");
-          }
-
-          // check license
-          var license = this.Page.Server.MapPath("/App_Data/License.xml");
-          if (!File.Exists(license))
-          {
-            throw new InvalidOperationException("No license.xml file is detected in /App_Data folder");
-          }
-
-          this.WriteLine("Installing Sitecore...");
-          this.WriteLine("");
-          this.WriteLine("IMPORTANT! The installation log only available in this request, all the rest requests will be waiting silently.");
-          this.WriteLine("");
-
-          Pipeline.Run(new ProcessorArgs(this, this.Mode));
-
-          this.WriteLine("");
-          this.WriteLine("Sitecore is starting now...<script>setTimeout(function(){ document.location.href=document.location.protocol + '//' + document.location.hostname;},20000);</script></body></html>");
+          throw new InvalidOperationException("No Sitecore.Kernel.dll file is detected in both /bin and /App_Bin folders");
         }
-        finally
+
+        // check license
+        var license = this.Page.Server.MapPath("/App_Data/License.xml");
+        if (!File.Exists(license))
         {
-          if (File.Exists(lockFilePath))
-          {
-            File.Delete(lockFilePath);
-          }
+          throw new InvalidOperationException("No license.xml file is detected in /App_Data folder");
         }
-      };
 
-      worker.RunWorkerAsync();
+        this.WriteLine("Installing Sitecore...");
+        this.WriteLine("");
+        this.WriteLine("IMPORTANT! The installation log only available in this request, all the rest requests will be waiting silently.");
+        this.WriteLine("");
 
-      var last = 0;
-      while (File.Exists(lockFilePath))
+        Pipeline.Run(new ProcessorArgs(this, this.Mode));
+
+        this.WriteLine("");
+        this.WriteLine("Sitecore is starting now...<script>setTimeout(function(){ document.location.href=document.location.protocol + '//' + document.location.hostname;},20000);</script></body></html>");
+      }
+      finally
       {
-        if (Noisy && last < Messages.Count)
+        if (File.Exists(lockFilePath))
         {
-          for (var i = last; i < Messages.Count; ++i)
-          {
-            lock (Messages)
-            {
-              this.Page.Response.Write(Messages[i] + "<br />");
-            }
-
-            last = i + 1;
-          }
-
-          this.Page.Response.Flush();
+          File.Delete(lockFilePath);
         }
-
-        Thread.Sleep(1000);
       }
     }
 
@@ -137,10 +110,8 @@ namespace Sitecore.Bootcamp.Core
         return;
       }
 
-      lock (Messages)
-      {
-        this.Messages.Add(message);
-      }
+      this.Page.Response.Write(message + "<br />");
+      this.Page.Response.Flush();
     }
   }
 }

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Sitecore.Bootcamp.Core</id>
-    <version>0.0.4.0</version>
+    <version>0.0.5.0</version>
     <authors>Alen Pelin</authors>
     <owners>Sitecore</owners>
     <projectUrl>https://github.com/Sitecore/Sitecore-Bootcamp</projectUrl>

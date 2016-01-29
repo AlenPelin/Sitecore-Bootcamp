@@ -35,6 +35,10 @@
         {
           Directory.CreateDirectory(dir);
         }
+        else if (File.Exists(targetPath))
+        {
+          File.Delete(targetPath);
+        }
 
         File.Move(sourcePath, targetPath);
       }
