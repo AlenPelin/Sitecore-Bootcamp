@@ -11,7 +11,13 @@
 
       args.WriteLine("Deleting installer files...");
 
-      File.Move(args.Server.MapPath("Default.aspx"), args.Server.MapPath("/App_Data/Default.aspx.disabled"));
+      var destFileName = args.Server.MapPath("/App_Data/Default.aspx.disabled");
+      if (File.Exists(destFileName))
+      {
+        File.Delete(destFileName);
+      }
+
+      File.Move(args.Server.MapPath("Default.aspx"), destFileName);
     }
   }
 }
