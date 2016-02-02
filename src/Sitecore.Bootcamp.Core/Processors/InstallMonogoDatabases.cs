@@ -31,7 +31,7 @@
 
         var addNode = connectionStrings.CreateElement("add");
         addNode.SetAttribute("name", name);
-        addNode.SetAttribute("connectionString", string.Format("mongodb://localhost:27017/{0}_{1}", args.Server.MapPath("/").Replace("\\", "_").Replace(":", ""), name));
+        addNode.SetAttribute("connectionString", string.Format("mongodb://localhost:27017/{0}_{1}", args.Server.MapPath("/").Replace("\\", "_").Replace(":", "").Replace(".", "_"), name.Replace("\\", "_").Replace(":", "").Replace(".", "_")));
         connectionStrings.DocumentElement.AppendChild(addNode);
         args.AddedConnectionStrings.Add(name);
       }
