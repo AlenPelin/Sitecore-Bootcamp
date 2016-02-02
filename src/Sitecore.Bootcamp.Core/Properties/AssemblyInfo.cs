@@ -9,6 +9,6 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("Sitecore.Bootcamp.Core.UnitTests")]
 
-[assembly: AssemblyVersion("0.0.5.2")]
-[assembly: AssemblyFileVersion("0.0.5.2")]
-[assembly: AssemblyInformationalVersion("0.0.5.2")]
+[assembly: AssemblyVersion("0.0.5.3")]
+[assembly: AssemblyFileVersion("0.0.5.3")]
+[assembly: AssemblyInformationalVersion("0.0.5.3")]

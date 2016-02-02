@@ -3,7 +3,7 @@
   using System.Configuration;
   using Sitecore.Diagnostics.Base;
 
-  internal class InstallMonogoDatabases : InstallDatabaseProcessorBase
+  internal class InstallMongoDatabases : InstallDatabaseProcessorBase
   {
     internal override void Process(ProcessorArgs args)
     {

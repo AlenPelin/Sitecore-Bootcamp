@@ -31,7 +31,7 @@
       new InstallSqlDatabases(),
 
       // safe: add missing mongo connection strings to ConnectionStrings.config
-      new InstallMonogoDatabases(),
+      new InstallMongoDatabases(),
 
       // safe: save in-memory ConnectionStrings.config to file system
       new SaveConnectionStringsConfig(),

@@ -85,7 +85,7 @@
     <Compile Include="Processors\InstallDatabaseProcessorBase.cs" />
     <Compile Include="Processors\InstallDefaultFiles.cs" />
     <Compile Include="Processors\InstallFilesBase.cs" />
-    <Compile Include="Processors\InstallMonogoDatabases.cs" />
+    <Compile Include="Processors\InstallMongoDatabases.cs" />
     <Compile Include="Processors\InstallSqlDatabases.cs" />
     <Compile Include="Processors\LoadConnectionStringsConfig.cs" />
     <Compile Include="Processors\MergeWebConfigIncludes.cs" />
