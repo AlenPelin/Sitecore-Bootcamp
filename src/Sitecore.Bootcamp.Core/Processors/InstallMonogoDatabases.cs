@@ -1,5 +1,6 @@
 ﻿namespace Sitecore.Bootcamp.Core.Processors
 {
+  using System.Configuration;
   using Sitecore.Diagnostics.Base;
 
   internal class InstallMonogoDatabases : InstallDatabaseProcessorBase
@@ -19,6 +20,11 @@
       foreach (var name in mongoConnectionStrings)
       {
         if (args.AddedConnectionStrings.Contains(name))
+        {
+          continue;
+        }
+
+        if (ConfigurationManager.ConnectionStrings[name] != null)
         {
           continue;
         }

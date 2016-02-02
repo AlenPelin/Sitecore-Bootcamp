@@ -1,6 +1,7 @@
 ﻿namespace Sitecore.Bootcamp.Core.Processors
 {
   using System.Collections.Generic;
+  using System.Configuration;
   using System.Data.SqlClient;
   using System.IO;
   using System.Linq;
@@ -80,6 +81,11 @@
         }
 
         if (args.AddedConnectionStrings.Contains(name))
+        {
+          continue;
+        }
+
+        if (ConfigurationManager.ConnectionStrings[name] != null)
         {
           continue;
         }
