@@ -90,7 +90,7 @@ namespace Sitecore.Bootcamp.Core
         Pipeline.Run(new ProcessorArgs(this, this.Mode));
 
         this.WriteLine("");
-        this.WriteLine("Sitecore is starting now...<script>document.location.href=document.location.protocol + '//' + document.location.hostname;</script></body></html>");
+        this.WriteLine("Sitecore is starting now...<script>document.location.reload();</script></body></html>");
       }
       finally
       {

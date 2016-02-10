@@ -6,6 +6,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © Sitecore 2016")]
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("0.0.5.3")]
-[assembly: AssemblyFileVersion("0.0.5.3")]
-[assembly: AssemblyInformationalVersion("0.0.5.3")]
+[assembly: AssemblyVersion("0.0.5.4")]
+[assembly: AssemblyFileVersion("0.0.5.4")]
+[assembly: AssemblyInformationalVersion("0.0.5.4")]
