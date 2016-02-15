@@ -86,7 +86,9 @@ namespace Sitecore.Bootcamp.Core
 
         this.WriteLine("Installing Sitecore...");
         this.WriteLine("");
-        this.WriteLine("IMPORTANT! The installation log only available in this request, all the rest requests will be waiting silently.");
+        this.WriteLine("IMPORTANT!");
+        this.WriteLine("- Do not abort this request (do not close tab or browser, do not refresh the page) as installation happens in its working thread.");
+        this.WriteLine("- The installation log only available in this request, all the rest requests will be waiting silently.");
         this.WriteLine("");
 
         Pipeline.Run(new ProcessorArgs(this, this.Mode));
