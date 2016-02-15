@@ -9,9 +9,6 @@
     [NotNull]
     private static readonly Processor[] Processors = 
     {
-      // safe: check that lock.txt does exis
-      new CheckLockFile(),
-
       // safe: find Sitecore release metadata
       new DownloadReleaseMetadata(),
 
@@ -62,9 +59,6 @@
 
       // critical: merge default web.config with Web_Config/Include/**/*.config files
       new MergeWebConfigIncludes(),
-
-      // critical: delete lock.txt file
-      new DeleteLockFile(), 
 
       // cricital: move default.aspx to App_Data/default.aspx.disabled
       new DeleteBootcampFiles()

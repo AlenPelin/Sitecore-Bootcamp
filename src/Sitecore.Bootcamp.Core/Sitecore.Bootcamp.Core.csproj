@@ -70,8 +70,6 @@
   <ItemGroup>
     <Compile Include="BootcampCore.cs" />
     <Compile Include="InstallMode.cs" />
-    <Compile Include="Processors\CheckLockFile.cs" />
-    <Compile Include="Processors\DeleteLockFile.cs" />
     <Compile Include="Processors\ExtractProgramDataNuGetPackage.cs" />
     <Compile Include="Processors\MoveAssembliesToBinFolder.cs" />
     <Compile Include="Processors\CopyNinjectAssembly.cs" />
