@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.ComponentModel;
-
 namespace Sitecore.Bootcamp.Core
 {
   using System;
@@ -16,16 +13,9 @@ namespace Sitecore.Bootcamp.Core
     [NotNull]
     internal readonly Page Page;
 
-    private static bool installationStarted;
-
-    private static bool installationFinished;
-
     private readonly BootcampMode Mode;
 
     private readonly bool Noisy;
-
-    [NotNull]
-    private readonly List<string> Messages = new List<string>();
 
     internal BootcampCore([NotNull] Page page, BootcampMode mode, bool noisy)
     {
@@ -59,8 +49,20 @@ namespace Sitecore.Bootcamp.Core
         this.Page.Response.Redirect("/");
       }
 
-      File.Open(lockFilePath, FileMode.CreateNew)
+      try
+      {
+        File.Open(lockFilePath, FileMode.CreateNew)
         .Close();
+      }
+      catch (IOException)
+      {
+        while (File.Exists(lockFilePath))
+        {
+          Thread.Sleep(1000);
+        }
+
+        this.Page.Response.Redirect("/");
+      }
       
       try
       {
