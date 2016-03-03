@@ -58,10 +58,7 @@
       new InstallConfigFiles(),
 
       // critical: merge default web.config with Web_Config/Include/**/*.config files
-      new MergeWebConfigIncludes(),
-
-      // cricital: move default.aspx to App_Data/default.aspx.disabled
-      new DeleteBootcampFiles()
+      new MergeWebConfigIncludes()
     };
 
     internal static void Run([NotNull] ProcessorArgs args)

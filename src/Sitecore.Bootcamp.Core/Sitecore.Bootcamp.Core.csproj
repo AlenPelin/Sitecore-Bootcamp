@@ -74,7 +74,6 @@
     <Compile Include="Processors\MoveAssembliesToBinFolder.cs" />
     <Compile Include="Processors\CopyNinjectAssembly.cs" />
     <Compile Include="Processors\CreateDataFolders.cs" />
-    <Compile Include="Processors\DeleteBootcampFiles.cs" />
     <Compile Include="Processors\DeleteRoslynAssemblies.cs" />
     <Compile Include="Processors\ExtractBundledNuGetPackages.cs" />
     <Compile Include="Processors\ExtractNuGetPackageBase.cs" />
