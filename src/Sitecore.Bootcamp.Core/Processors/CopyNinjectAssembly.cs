@@ -8,6 +8,7 @@
     internal override void Process(ProcessorArgs args)
     {
       Assert.ArgumentNotNull(args, "args");
+
       var sourceNinject = args.Server.MapPath("/bin/Ninject.dll");
       if (!File.Exists(sourceNinject))
       {

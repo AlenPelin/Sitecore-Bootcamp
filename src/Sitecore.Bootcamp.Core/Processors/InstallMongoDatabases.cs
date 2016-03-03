@@ -18,6 +18,7 @@
         "tracking.history",
         "tracking.contact",
       };
+
       foreach (var name in mongoConnectionStrings)
       {
         if (args.AddedConnectionStrings.Contains(name))
