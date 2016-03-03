@@ -69,28 +69,25 @@ namespace Sitecore.Bootcamp
         while (File.Exists(lockFilePath))
         {
           Thread.Sleep(1000);
+
+          try
+          {
+            File.Delete(lockFilePath);
+          }
+          catch
+          {
+            // need to wait
+          }
         }
 
         response?.Redirect("/");
       }
 
+      Stream lockStream = null;
       try
       {
-        File.Open(lockFilePath, FileMode.CreateNew)
-        .Close();
-      }
-      catch (IOException)
-      {
-        while (File.Exists(lockFilePath))
-        {
-          Thread.Sleep(1000);
-        }
+        lockStream = File.Open(lockFilePath, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None);
 
-        response?.Redirect("/");
-      }
-
-      try
-      {
         var app = this.Application;
         Assert.IsNotNull(app, "app");
 
@@ -115,11 +112,41 @@ namespace Sitecore.Bootcamp
         this.WriteLine("");
         this.WriteLine("Sitecore is starting now...<script>document.location.reload();</script></body></html>");
       }
+      catch (IOException)
+      {
+        while (File.Exists(lockFilePath))
+        {
+          Thread.Sleep(1000);
+
+          try
+          {
+            File.Delete(lockFilePath);
+          }
+          catch
+          {
+            // need to wait
+          }
+        }
+
+        response?.Redirect("/");
+      }
       finally
       {
-        if (File.Exists(lockFilePath))
+        if (lockStream != null)
         {
-          File.Delete(lockFilePath);
+          lockStream.Close();
+        }
+
+        try
+        {
+          if (File.Exists(lockFilePath))
+          {
+            File.Delete(lockFilePath);
+          }
+        }
+        catch
+        {
+          // it is not important if we cannot delete file
         }
       }
     }
