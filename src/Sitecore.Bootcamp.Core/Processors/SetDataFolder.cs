@@ -7,24 +7,26 @@
     internal override void Process(ProcessorArgs args)
     {
       var dataFolder = args.Server.MapPath("/App_Config/Include/zzz/DataFolder.config");
-      if (!File.Exists(dataFolder))
+      if (File.Exists(dataFolder))
       {
-        var dir = Path.GetDirectoryName(dataFolder);
-        if (!Directory.Exists(dir))
-        {
-          Directory.CreateDirectory(dir);
-        }
+        return;
+      }
 
-        var dataFolderPath = "/App_Data";
-        var contents = $@"<?xml version=""1.0"" encoding=""utf-8""?>
+      var dir = Path.GetDirectoryName(dataFolder);
+      if (!Directory.Exists(dir))
+      {
+        Directory.CreateDirectory(dir);
+      }
+
+      var dataFolderPath = "/App_Data";
+      var contents = $@"<?xml version=""1.0"" encoding=""utf-8""?>
 <configuration xmlns:set=""http://www.sitecore.net/xmlconfig/set/"">
   <sitecore>
     <sc.variable name=""dataFolder"" set:value=""{dataFolderPath}"" />
   </sitecore>
 </configuration>";
 
-        File.WriteAllText(dataFolder, contents);
-      }
+      File.WriteAllText(dataFolder, contents);
     }
   }
 }
