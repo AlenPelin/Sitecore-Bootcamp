@@ -148,11 +148,11 @@ namespace Sitecore.Bootcamp
       return kernelVersion;
     }
 
-    internal void WriteLine([NotNull] string message, bool bypassNoisy = false)
+    internal void WriteLine([NotNull] string message, bool bypassSilent = false)
     {
       Assert.ArgumentNotNull(message, "message");
 
-      if (!Noisy && !bypassNoisy)
+      if (!Noisy && !bypassSilent)
       {
         return;
       }
