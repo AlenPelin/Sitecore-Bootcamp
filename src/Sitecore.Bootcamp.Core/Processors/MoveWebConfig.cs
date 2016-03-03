@@ -1,6 +1,7 @@
-﻿namespace Sitecore.Bootcamp.Core.Processors
+﻿namespace Sitecore.Bootcamp.Processors
 {
   using System.IO;
+  using System.Linq;
   using System.Xml;
   using Sitecore.Diagnostics.Base;
 
@@ -25,6 +26,14 @@
         return;
       }
 
+      var httpModule = webConfig.SelectNodes("/configuration/system.web/httpModules/add")
+        .OfType<XmlElement>()
+        .FirstOrDefault(x => x.GetAttribute("type").Contains(typeof(HttpModule).FullName));
+      if (httpModule != null)
+      {
+        httpModule.ParentNode.RemoveChild(httpModule);
+      }
+
       args.WriteLine("Moving /web.config to /Web_Config/Include/!root_web_config.config");
       var targetFolder = Path.Combine(root, "Web_Config/Include");
       var targetWebConfig = Path.Combine(targetFolder, "!root_web_config.config");
@@ -33,7 +42,8 @@
         File.Delete(targetWebConfig);
       }
 
-      File.Move(webConfigPath, targetWebConfig);
+      webConfig.Save(targetWebConfig);
+      File.Delete(webConfigPath);
     }
   }
 }
