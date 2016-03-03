@@ -89,7 +89,7 @@
   <ItemGroup>
     <Content Include="App_Data\license.xml" />
     <Content Include="App_Config\Include\zzz\UseServerSideRedirect.config" />
-    <Content Include="packages.config" />
+    <None Include="packages.config" />
     <Content Include="Web_Config\Include\Membership.DisablePasswordReset.config" />
     <Content Include="Web_Config\Include\Membership.DeleteSwitcher.config" />
     <Content Include="Web_Config\Include\AppSettings.ServerName.config">
