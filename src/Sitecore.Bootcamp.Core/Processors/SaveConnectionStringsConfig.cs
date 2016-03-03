@@ -17,6 +17,13 @@ namespace Sitecore.Bootcamp.Processors
         Directory.CreateDirectory(dir);
       }
 
+      if (File.Exists(connectionStringsPath) &&
+          File.ReadAllText(connectionStringsPath) == args.ConnectionStringsConfig.OuterXml)
+      {
+        // speed up and prevent Sitecore from recycling
+        return;
+      }
+
       args.ConnectionStringsConfig.Save(connectionStringsPath);
     }
   }
