@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Sitecore.Bootcamp.Core.Processors
+namespace Sitecore.Bootcamp.Processors
 {
   public class DeleteRoslynAssemblies : Processor
   {

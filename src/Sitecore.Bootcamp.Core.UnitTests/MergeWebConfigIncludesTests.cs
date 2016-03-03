@@ -1,9 +1,9 @@
-﻿namespace Sitecore.Bootcamp.Core.UnitTests
+﻿namespace Sitecore.Bootcamp.UnitTests
 {
   using System.IO;
   using System.Xml;
   using Microsoft.VisualStudio.TestTools.UnitTesting;
-  using Sitecore.Bootcamp.Core.Processors;
+  using Sitecore.Bootcamp.Processors;
 
   [TestClass]
   public class MergeWebConfigIncludesTests

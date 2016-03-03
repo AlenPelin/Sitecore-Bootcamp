@@ -1,4 +1,4 @@
-namespace Sitecore.Bootcamp.Core.Processors
+namespace Sitecore.Bootcamp.Processors
 {
   using System;
   using System.IO;

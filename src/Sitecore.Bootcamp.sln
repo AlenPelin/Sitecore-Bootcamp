@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Bootcamp.Core", "Sitecore.Bootcamp.Core\Sitecore.Bootcamp.Core.csproj", "{926BDCE0-5A27-424E-9DC5-8EB2215C009E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Bootcamp", "Sitecore.Bootcamp\Sitecore.Bootcamp.csproj", "{725E27CE-B71D-4093-9371-79D837B5886D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Bootcamp.SampleSite", "Sitecore.Bootcamp.SampleSite\Sitecore.Bootcamp.SampleSite.csproj", "{306515AE-83C3-4D81-A907-E3D44F7B5B9F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Bootcamp.Core.UnitTests", "Sitecore.Bootcamp.Core.UnitTests\Sitecore.Bootcamp.Core.UnitTests.csproj", "{865396FD-DCAA-4882-AB51-2E08B549D90B}"
@@ -21,10 +19,6 @@ Global
 		{926BDCE0-5A27-424E-9DC5-8EB2215C009E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{926BDCE0-5A27-424E-9DC5-8EB2215C009E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{926BDCE0-5A27-424E-9DC5-8EB2215C009E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{725E27CE-B71D-4093-9371-79D837B5886D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{725E27CE-B71D-4093-9371-79D837B5886D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{725E27CE-B71D-4093-9371-79D837B5886D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{725E27CE-B71D-4093-9371-79D837B5886D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{306515AE-83C3-4D81-A907-E3D44F7B5B9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{306515AE-83C3-4D81-A907-E3D44F7B5B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{306515AE-83C3-4D81-A907-E3D44F7B5B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU

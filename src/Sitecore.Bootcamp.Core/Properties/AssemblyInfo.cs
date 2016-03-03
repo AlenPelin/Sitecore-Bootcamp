@@ -2,12 +2,12 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Sitecore.Bootcamp.Core")]
+[assembly: AssemblyTitle("Sitecore.Bootcamp")]
 [assembly: AssemblyProduct("Sitecore.Bootcamp")]
 [assembly: AssemblyCopyright("Copyright © Sitecore 2016")]
 [assembly: ComVisible(false)]
 
-[assembly: InternalsVisibleTo("Sitecore.Bootcamp.Core.UnitTests")]
+[assembly: InternalsVisibleTo("Sitecore.Bootcamp.UnitTests")]
 
 [assembly: AssemblyVersion("0.0.5.7")]
 [assembly: AssemblyFileVersion("0.0.5.7")]

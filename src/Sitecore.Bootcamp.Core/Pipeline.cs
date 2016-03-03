@@ -1,6 +1,6 @@
-﻿namespace Sitecore.Bootcamp.Core
+﻿namespace Sitecore.Bootcamp
 {
-  using Sitecore.Bootcamp.Core.Processors;
+  using Sitecore.Bootcamp.Processors;
   using Sitecore.Diagnostics.Base;
   using Sitecore.Diagnostics.Base.Annotations;
 
@@ -9,6 +9,9 @@
     [NotNull]
     private static readonly Processor[] Processors = 
     {
+      // safe: abort pipeline if nothing changed
+      new CheckForChanges(),
+
       // safe: delete bin/roslyn folder
       new DeleteRoslynAssemblies(), 
 
@@ -55,7 +58,10 @@
       new InstallConfigFiles(),
 
       // critical: merge default web.config with Web_Config/Include/**/*.config files
-      new MergeWebConfigIncludes()
+      new MergeWebConfigIncludes(),
+
+      // safe: save the list of files and metadata for CheckForChanges
+      new SaveFileList(), 
     };
 
     internal static void Run([NotNull] ProcessorArgs args)

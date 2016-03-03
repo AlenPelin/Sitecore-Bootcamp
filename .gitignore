@@ -16,3 +16,5 @@ src/Sitecore.Bootcamp.SampleSite/obj/
 src/Sitecore.Bootcamp.Core.UnitTests/obj/
 src/Sitecore.Bootcamp.Core.UnitTests/bin/
 src/Sitecore.Bootcamp.SampleSite/App_Data/license.xml
+src/.idea/
+*.iml

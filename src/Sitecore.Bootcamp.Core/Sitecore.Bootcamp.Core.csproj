@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sitecore.Bootcamp.Core</RootNamespace>
-    <AssemblyName>Sitecore.Bootcamp.Core</AssemblyName>
+    <RootNamespace>Sitecore.Bootcamp</RootNamespace>
+    <AssemblyName>Sitecore.Bootcamp</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -60,6 +60,10 @@
       <HintPath>..\packages\Sitecore.Diagnostics.InformationService.Client.1.3.0.5\lib\net40\Sitecore.Diagnostics.InformationService.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Kernel, Version=8.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SC.Sitecore.Kernel.8.1.0.151207\lib\Sitecore.Kernel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -69,6 +73,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootcampCore.cs" />
+    <Compile Include="HttpModule.cs" />
+    <Compile Include="InitializeHook.cs" />
+    <Compile Include="Processors\AbortPipelineException.cs" />
+    <Compile Include="Processors\SaveFileList.cs" />
+    <Compile Include="Processors\CheckForChanges.cs" />
     <Compile Include="InstallMode.cs" />
     <Compile Include="Processors\ExtractProgramDataNuGetPackage.cs" />
     <Compile Include="Processors\MoveAssembliesToBinFolder.cs" />
@@ -96,12 +105,26 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Default.aspx" />
     <Content Include="Sitecore.Bootcamp.Core.nuspec">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\Sitecore.Bootcamp.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sitecore.Bootcamp.nuspec">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

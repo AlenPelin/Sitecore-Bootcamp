@@ -1,4 +1,4 @@
-namespace Sitecore.Bootcamp.Core
+namespace Sitecore.Bootcamp
 {
   public enum BootcampMode
   {

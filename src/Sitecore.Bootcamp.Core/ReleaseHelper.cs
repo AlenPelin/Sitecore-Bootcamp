@@ -1,9 +1,9 @@
-namespace Sitecore.Bootcamp.Core
+namespace Sitecore.Bootcamp
 {
   using System.Diagnostics;
   using System.IO;
   using System.Linq;
-  using Sitecore.Bootcamp.Core.Processors;
+  using Sitecore.Bootcamp.Processors;
   using Sitecore.Diagnostics.Base;
   using Sitecore.Diagnostics.Base.Annotations;
   using Sitecore.Diagnostics.InformationService.Client;
@@ -15,7 +15,7 @@ namespace Sitecore.Bootcamp.Core
     {
       args.WriteLine("Downloading metadata...");
 
-      var kernelVersion = GetKernelVersion(args);
+      var kernelVersion = args.SitecoreVersion;
       var versionName = GetVersionName(kernelVersion);
       var version = GetVersion(versionName);
       var releaseName = GetReleaseName(kernelVersion);
@@ -48,25 +48,6 @@ namespace Sitecore.Bootcamp.Core
       Assert.ArgumentNotNull(kernelVersion, "kernelVersion");
 
       return kernelVersion.Substring(0, kernelVersion.IndexOf(' '));
-    }
-
-    [NotNull]
-    private static string GetKernelVersion([NotNull] ProcessorArgs args)
-    {
-      Assert.ArgumentNotNull(args, "args");
-
-      var kernelPath = args.Server.MapPath("bin\\Sitecore.Kernel.dll");
-      if (!File.Exists(kernelPath))
-      {
-        kernelPath = args.Server.MapPath("App_Bin\\Sitecore.Kernel.dll");
-
-        Assert.IsTrue(File.Exists(kernelPath), "Cannot find Sitecore.Kernel.dll in both bin and App_Bin folders.");
-      }
-
-      var kernelVersion = FileVersionInfo.GetVersionInfo(kernelPath).ProductVersion;
-      Assert.IsNotNullOrEmpty(kernelVersion, "kernelVersion");
-
-      return kernelVersion;
     }
 
     [NotNull]

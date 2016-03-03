@@ -1,4 +1,4 @@
-﻿namespace Sitecore.Bootcamp.Core.Processors
+﻿namespace Sitecore.Bootcamp.Processors
 {
   using System.Collections.Generic;
   using System.Web;
@@ -26,13 +26,17 @@
     [CanBeNull]
     private IRelease ReleaseCache;
 
-    internal ProcessorArgs([NotNull] BootcampCore bootcampCore, BootcampMode mode)
+    public readonly string SitecoreVersion;
+
+    internal ProcessorArgs([NotNull] BootcampCore bootcampCore, HttpServerUtility server, BootcampMode mode, string sitecoreVersion)
     {
       Assert.ArgumentNotNull(bootcampCore, "bootcampCore");
+      Assert.ArgumentNotNull(server, "server");
 
       this.BootcampCore = bootcampCore;
       this.Mode = mode;
-      this.Server = bootcampCore.Page.Server;
+      this.Server = server;
+      this.SitecoreVersion = sitecoreVersion;
     }
 
     [NotNull]

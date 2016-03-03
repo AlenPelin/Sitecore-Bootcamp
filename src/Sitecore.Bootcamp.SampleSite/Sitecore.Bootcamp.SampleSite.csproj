@@ -42,19 +42,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Sitecore.Bootcamp\Default.aspx">
-      <Link>Default.aspx</Link>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Sitecore.Bootcamp.Core\Sitecore.Bootcamp.Core.csproj">
       <Project>{926bdce0-5a27-424e-9dc5-8eb2215c009e}</Project>
       <Name>Sitecore.Bootcamp.Core</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Sitecore.Bootcamp\Sitecore.Bootcamp.csproj">
-      <Project>{725e27ce-b71d-4093-9371-79d837b5886d}</Project>
-      <Name>Sitecore.Bootcamp</Name>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
@@ -87,8 +77,14 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\license.xml" />
+    <Content Include="..\Sitecore.Bootcamp.Core\Default.aspx">
+      <Link>Default.aspx</Link>
+    </Content>
     <Content Include="App_Config\Include\zzz\UseServerSideRedirect.config" />
+    <Content Include="App_Data\license.xml" />
+    <Content Include="..\Sitecore.Bootcamp.Core\web.config">
+      <Link>web.config</Link>
+    </Content>
     <None Include="packages.config" />
     <Content Include="Web_Config\Include\Membership.DisablePasswordReset.config" />
     <Content Include="Web_Config\Include\Membership.DeleteSwitcher.config" />
@@ -96,7 +92,9 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\z.pubxml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

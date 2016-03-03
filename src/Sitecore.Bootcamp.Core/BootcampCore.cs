@@ -1,29 +1,52 @@
-namespace Sitecore.Bootcamp.Core
+namespace Sitecore.Bootcamp
 {
   using System;
+  using System.Diagnostics;
   using System.IO;
+  using System.Linq;
+  using System.Reflection;
   using System.Threading;
+  using System.Web;
   using System.Web.UI;
-  using Sitecore.Bootcamp.Core.Processors;
+  using Sitecore.Bootcamp.Processors;
   using Sitecore.Diagnostics.Base;
   using Sitecore.Diagnostics.Base.Annotations;
 
   public class BootcampCore
   {
-    [NotNull]
-    internal readonly Page Page;
-
     private readonly BootcampMode Mode;
 
     private readonly bool Noisy;
 
-    internal BootcampCore([NotNull] Page page, BootcampMode mode, bool noisy)
+    [NotNull]
+    private readonly HttpServerUtility Server;
+
+    [CanBeNull]
+    private readonly HttpResponse Response;
+
+    [NotNull]
+    private readonly HttpApplicationState Application;
+
+    internal BootcampCore([NotNull] Page page, BootcampMode mode, bool noisy) : this(page.Server, page.Application, page.Response, mode, noisy)
     {
       Assert.ArgumentNotNull(page, "page");
+    }
 
-      this.Page = page;
+    public BootcampCore([NotNull] HttpServerUtility server, [NotNull] HttpApplicationState application, [CanBeNull] HttpResponse response, BootcampMode mode, bool noisy)
+    {
+      Assert.ArgumentNotNull(server, "server");
+      Assert.ArgumentNotNull(application, "application");
+
+      this.Server = server;
+      this.Application = application;
+      this.Response = response;
       this.Mode = mode;
       this.Noisy = noisy;
+    }
+
+    public BootcampCore(HttpContext context, BootcampMode mode, bool noisy) : this(context.Server, context.Application, context.Response, mode, noisy)
+    {
+      Assert.ArgumentNotNull(context, "context");
     }
 
     public static void Install([NotNull] Page page, BootcampMode mode, bool noisy)
@@ -35,10 +58,12 @@ namespace Sitecore.Bootcamp.Core
 
     public void Install()
     {
-      this.Page.Server.ScriptTimeout = int.MaxValue;
-      this.Page.Response.StatusCode = 503;
+      this.Server.ScriptTimeout = int.MaxValue;
+      var response = this.Response;
+      if (response != null)
+        response.StatusCode = 503;
 
-      var lockFilePath = this.Page.Server.MapPath("lock.txt");
+      var lockFilePath = this.Server.MapPath("lock.txt");
       if (File.Exists(lockFilePath))
       {
         while (File.Exists(lockFilePath))
@@ -46,7 +71,7 @@ namespace Sitecore.Bootcamp.Core
           Thread.Sleep(1000);
         }
 
-        this.Page.Response.Redirect("/");
+        response?.Redirect("/");
       }
 
       try
@@ -61,24 +86,18 @@ namespace Sitecore.Bootcamp.Core
           Thread.Sleep(1000);
         }
 
-        this.Page.Response.Redirect("/");
+        response?.Redirect("/");
       }
-      
+
       try
       {
-        var app = this.Page.Application;
+        var app = this.Application;
         Assert.IsNotNull(app, "app");
 
-        // check kernel
-        var kernel1 = this.Page.Server.MapPath("/bin/Sitecore.Kernel.dll");
-        var kernel2 = this.Page.Server.MapPath("/App_Bin/Sitecore.Kernel.dll");
-        if (!File.Exists(kernel1) && !File.Exists(kernel2))
-        {
-          throw new InvalidOperationException("No Sitecore.Kernel.dll file is detected in both /bin and /App_Bin folders");
-        }
+        var sitecoreVersion = GetSitecoreVersion();
 
         // check license
-        var license = this.Page.Server.MapPath("/App_Data/License.xml");
+        var license = this.Server.MapPath("/App_Data/License.xml");
         if (!File.Exists(license))
         {
           throw new InvalidOperationException("No license.xml file is detected in /App_Data folder");
@@ -91,7 +110,7 @@ namespace Sitecore.Bootcamp.Core
         this.WriteLine("- The installation log only available in this request, all the rest requests will be waiting silently.");
         this.WriteLine("");
 
-        Pipeline.Run(new ProcessorArgs(this, this.Mode));
+        Pipeline.Run(new ProcessorArgs(this, this.Server, this.Mode, sitecoreVersion));
 
         this.WriteLine("");
         this.WriteLine("Sitecore is starting now...<script>document.location.reload();</script></body></html>");
@@ -105,6 +124,30 @@ namespace Sitecore.Bootcamp.Core
       }
     }
 
+    private string GetSitecoreVersion()
+    {
+      // check kernel
+      var kernel1 = this.Server.MapPath("/bin/Sitecore.Kernel.dll");
+      var kernel2 = this.Server.MapPath("/App_Bin/Sitecore.Kernel.dll");
+      if (!File.Exists(kernel1) && !File.Exists(kernel2))
+      {
+        throw new InvalidOperationException("No Sitecore.Kernel.dll file is detected in both /bin and /App_Bin folders.");
+      }
+
+      var kernelPath = kernel1;
+      if (!File.Exists(kernelPath))
+      {
+        kernelPath = kernel2;
+
+        Assert.IsTrue(File.Exists(kernelPath), "Cannot find Sitecore.Kernel.dll in both bin and App_Bin folders.");
+      }
+
+      var kernelVersion = FileVersionInfo.GetVersionInfo(kernelPath).ProductVersion;
+      Assert.IsNotNullOrEmpty(kernelVersion, "kernelVersion");
+
+      return kernelVersion;
+    }
+
     internal void WriteLine([NotNull] string message, bool bypassNoisy = false)
     {
       Assert.ArgumentNotNull(message, "message");
@@ -114,8 +157,14 @@ namespace Sitecore.Bootcamp.Core
         return;
       }
 
-      this.Page.Response.Write(message + "<br />");
-      this.Page.Response.Flush();
+      var response = this.Response;
+      if (response == null)
+      {
+        return;
+      }
+
+      response.Write(message + "<br />");
+      response.Flush();
     }
   }
 }
