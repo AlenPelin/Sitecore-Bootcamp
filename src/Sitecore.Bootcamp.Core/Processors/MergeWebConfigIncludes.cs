@@ -123,6 +123,12 @@ namespace Sitecore.Bootcamp.Core.Processors
           Directory.Delete(webConfigFolder, true);
         }
 
+        if (output.OuterXml == originalWebConfig)
+        {
+          // the web.config is already okay
+          return null;
+        }
+
         return output;
       }
       finally

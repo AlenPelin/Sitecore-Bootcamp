@@ -1,6 +1,7 @@
 ﻿namespace Sitecore.Bootcamp.Core.Processors
 {
   using System.IO;
+  using System.Xml;
   using Sitecore.Diagnostics.Base;
 
   internal class MoveWebConfig : Processor
@@ -13,6 +14,14 @@
       var webConfigPath = Path.Combine(root, "web.config");
       if (!File.Exists(webConfigPath))
       {
+        return;
+      }
+
+      var webConfig = new XmlDocument();
+      webConfig.Load(webConfigPath);
+      if (webConfig.SelectSingleNode("/configuration/sitecore") != null)
+      {
+        // to speed up bootcamp we consider web.config read-to-use if it contains <sitecore> element
         return;
       }
 

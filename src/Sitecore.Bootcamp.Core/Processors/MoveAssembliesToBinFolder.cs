@@ -35,12 +35,19 @@
         {
           Directory.CreateDirectory(dir);
         }
-        else if (File.Exists(targetPath))
+        else
         {
-          File.Delete(targetPath);
+          var sourceFile = new FileInfo(sourcePath);
+          var targetFile = new FileInfo(targetPath);
+          if (targetFile.Exists && targetFile.Length == sourceFile.Length)
+          {
+            // to speed up bootcamp we do not overwrite the assemblies with the same size
+            continue;
+          }
         }
 
-        File.Move(sourcePath, targetPath);
+        // to avoid re-deploying during next web deploy we copy instead of moving
+        File.Copy(sourcePath, targetPath);
       }
     }
   }
