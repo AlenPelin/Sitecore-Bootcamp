@@ -52,7 +52,8 @@ namespace Sitecore.Bootcamp.Core.Processors
         var tempWebConfigPath = Path.Combine(tempFolder, "web.config");
 
         // workaround to bypass configbuilder limitations
-        File.WriteAllText(tempWebConfigPath, File.ReadAllText(webConfigPath).Replace("configSource=", "config__Source__disabled="));
+        var originalWebConfig = File.ReadAllText(webConfigPath);
+        File.WriteAllText(tempWebConfigPath, originalWebConfig.Replace("configSource=", "config__Source__disabled="));
 
         var tempIncludeFolder = Path.Combine(tempFolder, "Web_Config/Include");
         if (!Directory.Exists(tempIncludeFolder))

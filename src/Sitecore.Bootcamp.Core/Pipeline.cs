@@ -9,9 +9,6 @@
     [NotNull]
     private static readonly Processor[] Processors = 
     {
-      // safe: find Sitecore release metadata
-      new DownloadReleaseMetadata(),
-
       // safe: delete bin/roslyn folder
       new DeleteRoslynAssemblies(), 
 

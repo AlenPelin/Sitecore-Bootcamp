@@ -1,33 +1,31 @@
-﻿using System.IO;
-
-namespace Sitecore.Bootcamp.Core.Processors
+namespace Sitecore.Bootcamp.Core
 {
   using System.Diagnostics;
+  using System.IO;
   using System.Linq;
+  using Sitecore.Bootcamp.Core.Processors;
   using Sitecore.Diagnostics.Base;
   using Sitecore.Diagnostics.Base.Annotations;
   using Sitecore.Diagnostics.InformationService.Client;
   using Sitecore.Diagnostics.InformationService.Client.Model;
 
-  internal class DownloadReleaseMetadata : Processor
+  internal static class ReleaseHelper
   {
-    internal override void Process(ProcessorArgs args)
+    internal static IRelease GetRelease(ProcessorArgs args)
     {
-      Assert.ArgumentNotNull(args, "args");
-
       args.WriteLine("Downloading metadata...");
 
-      var kernelVersion = this.GetKernelVersion(args);
-      var versionName = this.GetVersionName(kernelVersion);
-      var version = this.GetVersion(versionName);
-      var releaseName = this.GetReleaseName(kernelVersion);
-      var release = this.GetRelease(version, releaseName);
+      var kernelVersion = GetKernelVersion(args);
+      var versionName = GetVersionName(kernelVersion);
+      var version = GetVersion(versionName);
+      var releaseName = GetReleaseName(kernelVersion);
+      var release = GetRelease(version, releaseName);
 
-      args.Release = release;
+      return release;
     }
 
     [NotNull]
-    private IVersion GetVersion([NotNull] string versionName)
+    private static IVersion GetVersion([NotNull] string versionName)
     {
       Assert.ArgumentNotNull(versionName, "versionName");
 
@@ -45,7 +43,7 @@ namespace Sitecore.Bootcamp.Core.Processors
     }
 
     [NotNull]
-    private string GetVersionName([NotNull] string kernelVersion)
+    private static string GetVersionName([NotNull] string kernelVersion)
     {
       Assert.ArgumentNotNull(kernelVersion, "kernelVersion");
 
@@ -53,7 +51,7 @@ namespace Sitecore.Bootcamp.Core.Processors
     }
 
     [NotNull]
-    private string GetKernelVersion([NotNull] ProcessorArgs args)
+    private static string GetKernelVersion([NotNull] ProcessorArgs args)
     {
       Assert.ArgumentNotNull(args, "args");
 
@@ -61,7 +59,7 @@ namespace Sitecore.Bootcamp.Core.Processors
       if (!File.Exists(kernelPath))
       {
         kernelPath = args.Server.MapPath("App_Bin\\Sitecore.Kernel.dll");
-        
+
         Assert.IsTrue(File.Exists(kernelPath), "Cannot find Sitecore.Kernel.dll in both bin and App_Bin folders.");
       }
 
@@ -72,7 +70,7 @@ namespace Sitecore.Bootcamp.Core.Processors
     }
 
     [NotNull]
-    private IRelease GetRelease([NotNull] IVersion version, [NotNull] string revisionName)
+    private static IRelease GetRelease([NotNull] IVersion version, [NotNull] string revisionName)
     {
       Assert.ArgumentNotNull(version, "version");
       Assert.ArgumentNotNull(revisionName, "revisionName");
@@ -84,7 +82,7 @@ namespace Sitecore.Bootcamp.Core.Processors
     }
 
     [NotNull]
-    private string GetReleaseName([NotNull] string kernelVersion)
+    private static string GetReleaseName([NotNull] string kernelVersion)
     {
       Assert.ArgumentNotNull(kernelVersion, "kernelVersion");
 

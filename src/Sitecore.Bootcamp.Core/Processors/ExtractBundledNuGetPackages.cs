@@ -11,9 +11,6 @@
 
       args.WriteLine("Extracting assemblies bundled in *.nupkg files...");
 
-      var release = args.Release;
-      Assert.IsNotNull(release, "release");
-
       var nugetPackages = Directory.GetFiles(args.Server.MapPath("/"), "*.nupkg", SearchOption.AllDirectories);
       
       foreach (var package in nugetPackages)

@@ -10,8 +10,8 @@
       Assert.ArgumentNotNull(args, "args");
 
       var root = args.Server.MapPath("/");
-      var webConfig = Path.Combine(root, "web.config");
-      if (!File.Exists(webConfig))
+      var webConfigPath = Path.Combine(root, "web.config");
+      if (!File.Exists(webConfigPath))
       {
         return;
       }
@@ -24,7 +24,7 @@
         File.Delete(targetWebConfig);
       }
 
-      File.Move(webConfig, targetWebConfig);
+      File.Move(webConfigPath, targetWebConfig);
     }
   }
 }

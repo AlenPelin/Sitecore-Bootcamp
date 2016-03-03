@@ -23,6 +23,9 @@
     [NotNull]
     private readonly BootcampCore BootcampCore;
 
+    [CanBeNull]
+    private IRelease ReleaseCache;
+
     internal ProcessorArgs([NotNull] BootcampCore bootcampCore, BootcampMode mode)
     {
       Assert.ArgumentNotNull(bootcampCore, "bootcampCore");
@@ -32,8 +35,33 @@
       this.Server = bootcampCore.Page.Server;
     }
 
-    [CanBeNull]
-    internal IRelease Release { get; set; }
+    [NotNull]
+    internal IRelease Release
+    {
+      get
+      {
+        var releaseCache = ReleaseCache;
+        if (releaseCache != null)
+        {
+          return releaseCache;
+        }
+
+        lock (this)
+        {
+          releaseCache = this.ReleaseCache;
+          if (releaseCache != null)
+          {
+            return releaseCache;
+          }
+
+          releaseCache = ReleaseHelper.GetRelease(this);
+
+          this.ReleaseCache = releaseCache;
+        }
+
+        return releaseCache;
+      }
+    }
 
     internal void WriteLine([NotNull] string message, bool bypassNoisy = false)
     {

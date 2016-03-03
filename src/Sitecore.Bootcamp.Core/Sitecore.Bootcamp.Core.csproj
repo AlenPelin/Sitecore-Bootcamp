@@ -88,9 +88,9 @@
     <Compile Include="Processors\MergeWebConfigIncludes.cs" />
     <Compile Include="Processors\MoveWebConfig.cs" />
     <Compile Include="Pipeline.cs" />
-    <Compile Include="Processors\DownloadReleaseMetadata.cs" />
     <Compile Include="Processors\Processor.cs" />
     <Compile Include="Processors\ProcessorArgs.cs" />
+    <Compile Include="ReleaseHelper.cs" />
     <Compile Include="Processors\SaveConnectionStringsConfig.cs" />
     <Compile Include="Processors\SetDataFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
